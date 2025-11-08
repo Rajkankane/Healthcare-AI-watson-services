@@ -1,0 +1,365 @@
+<!--Front end of the website  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare - Healthcare Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⚕️</span>
+                <span class="logo-text">MediCare</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
+                <li><a href="#doctors" onclick="navigateTo('doctors')">Doctors</a></li>
+                <li><a href="#appointments" onclick="navigateTo('appointments')">Appointments</a></li>
+                <li><a href="#admin" onclick="navigateTo('admin')">Admin</a></li>
+                <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="auth-btn" onclick="openAuthModal()">Login / Sign Up</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="page active">
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>Welcome to MediCare</h1>
+                <p>Your trusted healthcare platform for online consultations and appointment booking</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="navigateTo('doctors')">Book an Appointment</button>
+                    <button class="btn btn-secondary" onclick="openChat()">Chat with AI Assistant</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/placeholder.svg?height=400&width=400" alt="Medical Team">
+            </div>
+        </div>
+
+        <!-- Services Section -->
+        <section class="services-section">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏥</div>
+                    <h3>Online Consultation</h3>
+                    <p>Connect with experienced doctors from home</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📅</div>
+                    <h3>Easy Booking</h3>
+                    <p>Schedule appointments at your convenience</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💊</div>
+                    <h3>Prescriptions</h3>
+                    <p>Get digital prescriptions instantly</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Secure Data</h3>
+                    <p>Your health data is completely secure</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stat">
+                <h3>500+</h3>
+                <p>Verified Doctors</p>
+            </div>
+            <div class="stat">
+                <h3>50K+</h3>
+                <p>Happy Patients</p>
+            </div>
+            <div class="stat">
+                <h3>100K+</h3>
+                <p>Consultations</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>Support Available</p>
+            </div>
+        </section>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors" class="page">
+        <div class="doctors-header">
+            <h2>Find a Doctor</h2>
+            <div class="filter-section">
+                <input type="text" id="searchDoctor" placeholder="Search by name or specialty" onkeyup="filterDoctors()">
+                <select id="specialtyFilter" onchange="filterDoctors()">
+                    <option value="">All Specialties</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Dermatology">Dermatology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="Orthopedics">Orthopedics</option>
+                    <option value="Pediatrics">Pediatrics</option>
+                </select>
+            </div>
+        </div>
+        <div class="doctors-grid" id="doctorsGrid">
+            <!-- Doctors will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Appointments Section -->
+    <section id="appointments" class="page">
+        <h2>My Appointments</h2>
+        <div class="appointments-container">
+            <div id="appointmentsList" class="appointments-list">
+                <p class="empty-message">No appointments yet. <a href="#doctors" onclick="navigateTo('doctors')">Book one now!</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel Section -->
+    <section id="admin" class="page">
+        <div class="admin-container">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
+                <button class="tab-btn" onclick="switchAdminTab('appointments')">Appointments</button>
+                <button class="tab-btn" onclick="switchAdminTab('users')">Users</button>
+                <button class="tab-btn" onclick="switchAdminTab('feedback')">Feedback</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview-tab" class="admin-tab active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Appointments</h3>
+                        <p class="stat-number" id="totalAppointments">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p class="stat-number" id="totalUsers">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Doctors</h3>
+                        <p class="stat-number">15</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Revenue</h3>
+                        <p class="stat-number">$12,500</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div id="appointments-tab" class="admin-tab">
+                <h3>Manage Appointments</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentsTableBody">
+                        <!-- Appointments will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Users Tab -->
+            <div id="users-tab" class="admin-tab">
+                <h3>Manage Users</h3>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Join Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Feedback Tab -->
+            <div id="feedback-tab" class="admin-tab">
+                <h3>User Feedback</h3>
+                <div id="feedbackList" class="feedback-list">
+                    <!-- Feedback will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="page">
+        <div class="contact-container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📍 Address</h3>
+                        <p>123 Medical Plaza, Health City, HC 12345</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📞 Phone</h3>
+                        <p>1-800-MEDICARE</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>✉️ Email</h3>
+                        <p>support@medicare.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>🕐 Hours</h3>
+                        <p>24/7 Available</p>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="submitContactForm(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <input type="text" placeholder="Subject" required>
+                    <textarea placeholder="Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="auth-tab-btn" onclick="switchAuthTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Phone Number" required>
+                    <input type="password" placeholder="Password" required>
+                    <input type="password" placeholder="Confirm Password" required>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close" onclick="closeBookingModal()">&times;</span>
+            <h2>Book an Appointment</h2>
+            <form class="booking-form" onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label>Select Date:</label>
+                    <input type="date" id="appointmentDate" min="" required>
+                </div>
+                <div class="form-group">
+                    <label>Select Time:</label>
+                    <select id="appointmentTime" required>
+                        <option value="">Choose a time slot</option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Reason for Visit:</label>
+                    <textarea id="symptoms" placeholder="Describe your symptoms or reason for visit" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number:</label>
+                    <input type="tel" id="patientPhone" placeholder="Your phone number" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div id="chatbot" class="chatbot">
+        <div class="chatbot-header">
+            <h3>MediCare Assistant</h3>
+            <button class="close-chat" onclick="closeChat()">✕</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">
+                <p>Hello! I'm your MediCare Assistant. How can I help you today?</p>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+            <button onclick="sendChatMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About MediCare</h4>
+                <p>Your trusted healthcare platform providing quality medical services online.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 MediCare Healthcare Platform. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,20 +1,18 @@
-<!--Front end of the website  -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediCare - Healthcare Platform</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
+            <a href="#home" class="logo" onclick="navigateTo('home')">
                 <span class="logo-icon">⚕️</span>
                 <span class="logo-text">MediCare</span>
-            </div>
+            </a>
             <ul class="nav-links">
                 <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
                 <li><a href="#doctors" onclick="navigateTo('doctors')">Doctors</a></li>
@@ -26,12 +24,11 @@
                 <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
                     <span class="theme-icon">🌙</span>
                 </button>
-                <button class="auth-btn" onclick="openAuthModal()">Login / Sign Up</button>
+                <button class="auth-btn" onclick="handleAuthClick()">Login / Sign Up</button>
             </div>
         </div>
     </nav>
 
-    <!-- Home Section -->
     <section id="home" class="page active">
         <div class="hero-section">
             <div class="hero-content">
@@ -39,15 +36,13 @@
                 <p>Your trusted healthcare platform for online consultations and appointment booking</p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary" onclick="navigateTo('doctors')">Book an Appointment</button>
-                    <button class="btn btn-secondary" onclick="openChat()">Chat with AI Assistant</button>
-                </div>
+                    </div>
             </div>
             <div class="hero-image">
-                <img src="/placeholder.svg?height=400&width=400" alt="Medical Team">
+                <img src="https://placehold.co/600x400/007bff/ffffff?text=MediCare+Team" alt="Medical Team">
             </div>
         </div>
 
-        <!-- Services Section -->
         <section class="services-section">
             <h2>Our Services</h2>
             <div class="services-grid">
@@ -74,7 +69,6 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
         <section class="stats-section">
             <div class="stat">
                 <h3>500+</h3>
@@ -95,7 +89,6 @@
         </section>
     </section>
 
-    <!-- Doctors Section -->
     <section id="doctors" class="page">
         <div class="doctors-header">
             <h2>Find a Doctor</h2>
@@ -112,11 +105,9 @@
             </div>
         </div>
         <div class="doctors-grid" id="doctorsGrid">
-            <!-- Doctors will be loaded here by JavaScript -->
-        </div>
+            </div>
     </section>
 
-    <!-- Appointments Section -->
     <section id="appointments" class="page">
         <h2>My Appointments</h2>
         <div class="appointments-container">
@@ -126,18 +117,16 @@
         </div>
     </section>
 
-    <!-- Admin Panel Section -->
     <section id="admin" class="page">
         <div class="admin-container">
             <h2>Admin Dashboard</h2>
             <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchAdminTab('overview')">Overview</button>
-                <button class="tab-btn" onclick="switchAdminTab('appointments')">Appointments</button>
-                <button class="tab-btn" onclick="switchAdminTab('users')">Users</button>
-                <button class="tab-btn" onclick="switchAdminTab('feedback')">Feedback</button>
+                <button class="tab-btn active" onclick="switchAdminTab(event, 'overview')">Overview</button>
+                <button class="tab-btn" onclick="switchAdminTab(event, 'appointments')">Appointments</button>
+                <button class="tab-btn" onclick="switchAdminTab(event, 'users')">Users</button>
+                <button class="tab-btn" onclick="switchAdminTab(event, 'feedback')">Feedback</button>
             </div>
 
-            <!-- Overview Tab -->
             <div id="overview-tab" class="admin-tab active">
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -159,7 +148,6 @@
                 </div>
             </div>
 
-            <!-- Appointments Tab -->
             <div id="appointments-tab" class="admin-tab">
                 <h3>Manage Appointments</h3>
                 <table class="admin-table">
@@ -174,12 +162,10 @@
                         </tr>
                     </thead>
                     <tbody id="appointmentsTableBody">
-                        <!-- Appointments will be loaded here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
-            <!-- Users Tab -->
             <div id="users-tab" class="admin-tab">
                 <h3>Manage Users</h3>
                 <table class="admin-table">
@@ -193,22 +179,18 @@
                         </tr>
                     </thead>
                     <tbody id="usersTableBody">
-                        <!-- Users will be loaded here -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
 
-            <!-- Feedback Tab -->
             <div id="feedback-tab" class="admin-tab">
                 <h3>User Feedback</h3>
                 <div id="feedbackList" class="feedback-list">
-                    <!-- Feedback will be loaded here -->
-                </div>
+                    </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="page">
         <div class="contact-container">
             <h2>Contact Us</h2>
@@ -242,48 +224,44 @@
         </div>
     </section>
 
-    <!-- Authentication Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeAuthModal()">&times;</span>
             <div class="auth-container">
                 <div class="auth-tabs">
-                    <button class="auth-tab-btn active" onclick="switchAuthTab('login')">Login</button>
-                    <button class="auth-tab-btn" onclick="switchAuthTab('signup')">Sign Up</button>
+                    <button class="auth-tab-btn active" onclick="switchAuthTab(event, 'login')">Login</button>
+                    <button class="auth-tab-btn" onclick="switchAuthTab(event, 'signup')">Sign Up</button>
                 </div>
 
-                <!-- Login Form -->
                 <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
-                    <input type="email" placeholder="Email" required>
-                    <input type="password" placeholder="Password" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
 
-                <!-- Signup Form -->
                 <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="email" placeholder="Email" required>
-                    <input type="tel" placeholder="Phone Number" required>
-                    <input type="password" placeholder="Password" required>
-                    <input type="password" placeholder="Confirm Password" required>
+                    <input type="text" name="signupName" placeholder="Full Name" required>
+                    <input type="email" name="signupEmail" placeholder="Email" required>
+                    <input type="tel" name="signupPhone" placeholder="Phone Number" required>
+                    <input type="password" name="signupPassword" placeholder="Password" required>
+                    <input type="password" name="signupConfirmPassword" placeholder="Confirm Password" required>
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Booking Modal -->
     <div id="bookingModal" class="modal">
         <div class="modal-content modal-large">
             <span class="close" onclick="closeBookingModal()">&times;</span>
             <h2>Book an Appointment</h2>
             <form class="booking-form" onsubmit="submitBooking(event)">
                 <div class="form-group">
-                    <label>Select Date:</label>
+                    <label for="appointmentDate">Select Date:</label>
                     <input type="date" id="appointmentDate" min="" required>
                 </div>
                 <div class="form-group">
-                    <label>Select Time:</label>
+                    <label for="appointmentTime">Select Time:</label>
                     <select id="appointmentTime" required>
                         <option value="">Choose a time slot</option>
                         <option value="09:00">09:00 AM</option>
@@ -295,11 +273,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Reason for Visit:</label>
+                    <label for="symptoms">Reason for Visit:</label>
                     <textarea id="symptoms" placeholder="Describe your symptoms or reason for visit" rows="4" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Phone Number:</label>
+                    <label for="patientPhone">Phone Number:</label>
                     <input type="tel" id="patientPhone" placeholder="Your phone number" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Confirm Booking</button>
@@ -307,24 +285,6 @@
         </div>
     </div>
 
-    <!-- AI Chatbot -->
-    <div id="chatbot" class="chatbot">
-        <div class="chatbot-header">
-            <h3>MediCare Assistant</h3>
-            <button class="close-chat" onclick="closeChat()">✕</button>
-        </div>
-        <div class="chatbot-messages" id="chatMessages">
-            <div class="message bot-message">
-                <p>Hello! I'm your MediCare Assistant. How can I help you today?</p>
-            </div>
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
-            <button onclick="sendChatMessage()">Send</button>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -361,5 +321,20 @@
     </footer>
 
     <script src="script.js"></script>
+
+   <script>
+  window.watsonAssistantChatOptions = {
+    integrationID: "0815ad8d-cd54-4d47-84fd-5747400aef2f", // The ID of this integration.
+    region: "us-east", // The region your integration is hosted in.
+    serviceInstanceID: "7e7a1e4a-2945-45db-81f3-4843f789943b", // The ID of your service instance.
+    onLoad: async (instance) => { await instance.render(); }
+  };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+</script>
+
 </body>
 </html>

@@ -5,9 +5,9 @@
 }
 
 :root {
-  /* Light mode colors */
-  --primary-color: #0066cc;
-  --secondary-color: #00b366;
+  /* UPGRADE: More vibrant, modern colors */
+  --primary-color: #007bff; /* Was #0066cc */
+  --secondary-color: #28a745; /* Was #00b366 */
   --accent-color: #ff6b6b;
   --background-color: #ffffff;
   --surface-color: #f5f5f5;
@@ -17,19 +17,23 @@
   --success-color: #28a745;
   --warning-color: #ffc107;
   --error-color: #dc3545;
+
+  /* UPGRADE: New shadow colors for buttons */
+  --primary-shadow: rgba(0, 123, 255, 0.4);
+  --secondary-shadow: rgba(40, 167, 69, 0.4);
 }
 
 body.dark-mode {
-  /* Dark mode colors */
-  --primary-color: #4da6ff;
-  --secondary-color: #33cc99;
+  /* UPGRADE: Dark mode colors to match */
+  --primary-color: #008cff;
+  --secondary-color: #34c759;
   --accent-color: #ff8787;
   --background-color: #1a1a1a;
   --surface-color: #2d2d2d;
   --text-color: #ffffff;
   --text-light: #b0b0b0;
   --border-color: #404040;
-  --success-color: #51cf66;
+  --success-color: #34c759;
   --warning-color: #ffd43b;
   --error-color: #ff6b6b;
   
@@ -38,6 +42,10 @@ body.dark-mode {
       hsla(0, 0%, 100%, 0.05), 
       transparent 70%
     );
+
+  /* UPGRADE: Dark mode shadow colors */
+  --primary-shadow: rgba(0, 140, 255, 0.3);
+  --secondary-shadow: rgba(52, 199, 89, 0.3);
 }
 
 html {
@@ -45,7 +53,7 @@ html {
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+ font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background-color);
   /* UPGRADE: Add a subtle 3D background gradient to simulate lighting */
   background-image: radial-gradient(ellipse at top, 
@@ -55,8 +63,6 @@ body {
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
   line-height: 1.6;
-  /* UPGRADE: Add perspective for 3D transforms on child elements */
-  perspective: 1000px;
 }
 
 /* Navigation */
@@ -91,6 +97,7 @@ body {
   cursor: pointer;
   /* UPGRADE: Add text shadow for depth */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-decoration: none; /* UPGRADE: Remove underline from new link */
 }
 
 .logo-icon {
@@ -143,7 +150,7 @@ body {
   cursor: pointer;
   /* UPGRADE: Apply 3D button shadow and transition */
   transition: all 0.2s ease-out;
-  box-shadow: 0 3px 0 0 #004a99; /* Darker shade of primary */
+  box-shadow: 0 3px 0 0 #0056b3; /* UPGRADE: Darker shade of new primary */
   transform: translateY(0);
 }
 
@@ -152,13 +159,13 @@ body {
   opacity: 0.9;
   /* UPGRADE: "Press down" effect */
   transform: translateY(1px);
-  box-shadow: 0 2px 0 0 #004a99;
+  box-shadow: 0 2px 0 0 #0056b3;
 }
 
 .auth-btn:active {
   /* UPGRADE: Fully pressed effect */
   transform: translateY(3px);
-  box-shadow: 0 0 0 0 #004a99;
+  box-shadow: 0 0 0 0 #0056b3;
 }
 
 
@@ -240,33 +247,41 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* UPGRADE: Accessibility focus state */
+.btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
 
 .btn-primary {
-  background-color: var(--primary-color);
+  /* UPGRADE: Add gradient background */
+  background: linear-gradient(145deg, var(--primary-color), #0056b3);
   color: white;
   /* UPGRADE: Add colored shadow for pop */
-  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+  box-shadow: 0 4px 15px var(--primary-shadow);
 }
 
 .btn-primary:hover {
   opacity: 0.9;
   /* UPGRADE: Make it "pop out" more on hover */
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4);
+  box-shadow: 0 8px 20px var(--primary-shadow);
 }
 
 .btn-secondary {
-  background-color: var(--secondary-color);
+  /* UPGRADE: Add gradient background */
+  background: linear-gradient(145deg, var(--secondary-color), #218838);
   color: white;
   /* UPGRADE: Add colored shadow for pop */
-  box-shadow: 0 4px 15px rgba(0, 179, 102, 0.3);
+  box-shadow: 0 4px 15px var(--secondary-shadow);
 }
 
 .btn-secondary:hover {
   opacity: 0.9;
   /* UPGRADE: Make it "pop out" more on hover */
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 179, 102, 0.4);
+  box-shadow: 0 8px 20px var(--secondary-shadow);
 }
 
 /* Services Section */
@@ -304,7 +319,7 @@ body {
   transform: translateY(-10px) translateZ(30px);
   border-color: var(--primary-color);
   /* UPGRADE: Deeper shadow on hover */
-  box-shadow: 0 15px 40px rgba(0, 102, 204, 0.2);
+  box-shadow: 0 15px 40px var(--primary-shadow);
 }
 
 .service-icon {
@@ -332,7 +347,7 @@ body {
   max-width: 1200px;
   margin: 3rem auto;
   /* UPGRADE: Add shadow to lift the section off the page */
-  box-shadow: 0 10px 40px rgba(0, 102, 204, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 123, 255, 0.3);
   /* UPGRADE: Add text-shadow for 3D text */
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
@@ -379,7 +394,7 @@ body {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px rgba(0, 102, 204, 0.3);
+              0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
 
@@ -598,7 +613,7 @@ body {
 }
 
 .admin-table tbody tr:hover {
-  background-color: rgba(0, 102, 204, 0.05);
+  background-color: rgba(0, 123, 255, 0.05); /* UPGRADE: Use new primary color */
   /* UPGRADE: Make row lift slightly (visual cue) */
   transform: scale(1.01);
 }
@@ -710,7 +725,7 @@ body {
   border-color: var(--primary-color);
   /* UPGRADE: Inset shadow for 3D "pressed" effect */
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px rgba(0, 102, 204, 0.3);
+              0 0 5px var(--primary-shadow);
   background-color: var(--background-color); /* UPGRADE: Change bg on focus */
 }
 
@@ -830,7 +845,7 @@ body {
   border-color: var(--primary-color);
   /* UPGRADE: Inset shadow for 3D "pressed" effect */
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px rgba(0, 102, 204, 0.3);
+              0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
 
@@ -873,147 +888,11 @@ body {
   border-color: var(--primary-color);
   /* UPGRADE: Inset shadow for 3D "pressed" effect */
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px rgba(0, 102, 204, 0.3);
+              0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
 
-/* Chatbot */
-.chatbot {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 350px;
-  height: 500px;
-  background-color: var(--surface-color);
-  border-radius: 15px; /* UPGRADE: Softer radius */
-  /* UPGRADE: More significant shadow to lift off page */
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.25);
-  display: none;
-  flex-direction: column;
-  z-index: 999;
-  overflow: hidden;
-  /* UPGRADE: Add transition for opening */
-  transition: all 0.3s ease-out;
-}
-
-.chatbot.active {
-  display: flex;
-  /* UPGRADE: Add opening animation */
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.chatbot-header {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* UPGRADE: Add text shadow to header */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-}
-
-.chatbot-header h3 {
-  margin: 0;
-}
-
-.close-chat {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-/* UPGRADE: Add hover effect to close button */
-.close-chat:hover {
-    transform: scale(1.1) rotate(90deg);
-}
-
-.chatbot-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.message {
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  max-width: 80%;
-  word-wrap: break-word;
-  /* UPGRADE: Add shadow to messages */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.bot-message {
-  background-color: var(--primary-color);
-  color: white;
-  align-self: flex-start;
-}
-
-.user-message {
-  background-color: var(--secondary-color);
-  color: white;
-  align-self: flex-end;
-}
-
-.chatbot-input {
-  display: flex;
-  gap: 0.5rem;
-  padding: 1rem;
-  border-top: 1px solid var(--border-color);
-  /* UPGRADE: Add inner shadow */
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.chatbot-input input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-size: 0.9rem;
-  /* UPGRADE: Add transition */
-  transition: all 0.3s;
-}
-
-/* UPGRADE: Add focus state for chatbot input */
-.chatbot-input input:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
-}
-
-.chatbot-input button {
-  padding: 0.75rem 1rem;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.2s; /* UPGRADE: Changed transition */
-  /* UPGRADE: Add 3D button effect */
-  box-shadow: 0 3px 0 0 #004a99;
-  transform: translateY(0);
-}
-
-.chatbot-input button:hover {
-  opacity: 0.9;
-  /* UPGRADE: "Press" effect */
-  transform: translateY(1px);
-  box-shadow: 0 2px 0 0 #004a99;
-}
-
-.chatbot-input button:active {
-    transform: translateY(3px);
-    box-shadow: 0 0 0 0 #004a99;
-}
+/* --- UPGRADE: All .chatbot styles removed --- */
 
 /* Footer */
 .footer {
@@ -1114,15 +993,7 @@ body {
     grid-template-columns: 1fr;
   }
 
-  .chatbot {
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    right: 0;
-    border-radius: 0;
-    /* UPGRADE: Remove shadow on mobile full-screen */
-    box-shadow: none;
-  }
+  /* UPGRADE: .chatbot styles removed, no media query needed */
 
   .filter-section {
     flex-direction: column;

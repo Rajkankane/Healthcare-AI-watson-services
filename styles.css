@@ -1,0 +1,1135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Light mode colors */
+  --primary-color: #0066cc;
+  --secondary-color: #00b366;
+  --accent-color: #ff6b6b;
+  --background-color: #ffffff;
+  --surface-color: #f5f5f5;
+  --text-color: #333333;
+  --text-light: #666666;
+  --border-color: #e0e0e0;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --error-color: #dc3545;
+}
+
+body.dark-mode {
+  /* Dark mode colors */
+  --primary-color: #4da6ff;
+  --secondary-color: #33cc99;
+  --accent-color: #ff8787;
+  --background-color: #1a1a1a;
+  --surface-color: #2d2d2d;
+  --text-color: #ffffff;
+  --text-light: #b0b0b0;
+  --border-color: #404040;
+  --success-color: #51cf66;
+  --warning-color: #ffd43b;
+  --error-color: #ff6b6b;
+  
+  /* UPGRADE: Add a subtle gradient for dark mode */
+  --background-image: radial-gradient(ellipse at top, 
+      hsla(0, 0%, 100%, 0.05), 
+      transparent 70%
+    );
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  /* UPGRADE: Add a subtle 3D background gradient to simulate lighting */
+  background-image: radial-gradient(ellipse at top, 
+      hsla(0, 0%, 50%, 0.1), 
+      transparent 70%
+    );
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+  line-height: 1.6;
+  /* UPGRADE: Add perspective for 3D transforms on child elements */
+  perspective: 1000px;
+}
+
+/* Navigation */
+.navbar {
+  background-color: var(--surface-color);
+  padding: 1rem 0;
+  /* UPGRADE: Enhanced shadow for more depth */
+  box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.1), 
+              0 2px 5px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  cursor: pointer;
+  /* UPGRADE: Add text shadow for depth */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s; /* UPGRADE: Added transform */
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+  /* UPGRADE: Subtle pop effect */
+  transform: translateY(-2px);
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* UPGRADE: Smoother transition */
+}
+
+.theme-toggle:hover {
+  /* UPGRADE: 3D rotation effect */
+  transform: scale(1.1) rotateY(180deg);
+}
+
+.auth-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  /* UPGRADE: Apply 3D button shadow and transition */
+  transition: all 0.2s ease-out;
+  box-shadow: 0 3px 0 0 #004a99; /* Darker shade of primary */
+  transform: translateY(0);
+}
+
+.auth-btn:hover {
+  background-color: var(--primary-color);
+  opacity: 0.9;
+  /* UPGRADE: "Press down" effect */
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 0 #004a99;
+}
+
+.auth-btn:active {
+  /* UPGRADE: Fully pressed effect */
+  transform: translateY(3px);
+  box-shadow: 0 0 0 0 #004a99;
+}
+
+
+/* Pages */
+.page {
+  display: none;
+  padding: 2rem 1rem;
+  min-height: calc(100vh - 200px);
+}
+
+.page.active {
+  display: block;
+}
+
+/* Hero Section */
+.hero-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  /* UPGRADE: Add text shadow for depth */
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 10px;
+  /* UPGRADE: Deeper, softer shadow */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  /* UPGRADE: Add transition for 3D hover */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* UPGRADE: Add 3D tilt effect on hover */
+.hero-image:hover img {
+  transform: rotateY(-8deg) rotateX(4deg) scale(1.02);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Buttons */
+.btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px; /* UPGRADE: Slightly more rounded */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-out; /* UPGRADE: Smoother transition */
+  font-weight: 600;
+  /* UPGRADE: Add initial 3D state (slightly raised) */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* UPGRADE: "Pressed" state for all buttons */
+.btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  /* UPGRADE: Add colored shadow for pop */
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  /* UPGRADE: Make it "pop out" more on hover */
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 102, 204, 0.4);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+  /* UPGRADE: Add colored shadow for pop */
+  box-shadow: 0 4px 15px rgba(0, 179, 102, 0.3);
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+  /* UPGRADE: Make it "pop out" more on hover */
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 179, 102, 0.4);
+}
+
+/* Services Section */
+.services-section {
+  max-width: 1200px;
+  margin: 3rem auto;
+}
+
+.services-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  background-color: var(--surface-color);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease-out; /* UPGRADE: Smoother transition */
+  border: 2px solid transparent;
+  /* UPGRADE: Add initial shadow */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.service-card:hover {
+  /* UPGRADE: 3D "pop out" effect with translateZ */
+  transform: translateY(-10px) translateZ(30px);
+  border-color: var(--primary-color);
+  /* UPGRADE: Deeper shadow on hover */
+  box-shadow: 0 15px 40px rgba(0, 102, 204, 0.2);
+}
+
+.service-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  /* UPGRADE: Add text shadow to icon */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.service-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+/* Stats Section */
+.stats-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 3rem;
+  border-radius: 15px; /* UPGRADE: Softer radius */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+  max-width: 1200px;
+  margin: 3rem auto;
+  /* UPGRADE: Add shadow to lift the section off the page */
+  box-shadow: 0 10px 40px rgba(0, 102, 204, 0.3);
+  /* UPGRADE: Add text-shadow for 3D text */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.stat h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Doctors Section */
+.doctors-header {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+}
+
+.doctors-header h2 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.filter-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-section input,
+.filter-section select {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+/* UPGRADE: Add 3D inset focus state */
+.filter-section input:focus,
+.filter-section select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
+              0 0 5px rgba(0, 102, 204, 0.3);
+  background-color: var(--background-color);
+}
+
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.doctor-card {
+  background-color: var(--surface-color);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07); /* UPGRADE: Soften initial shadow */
+  transition: all 0.3s ease-out; /* UPGRADE: Smoother transition */
+}
+
+.doctor-card:hover {
+  /* UPGRADE: Stronger 3D pop effect */
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.doctor-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.doctor-info {
+  padding: 1.5rem;
+}
+
+.doctor-info h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.doctor-specialty {
+  color: var(--secondary-color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.doctor-rating {
+  color: var(--warning-color);
+  margin-bottom: 0.5rem;
+}
+
+.doctor-details {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.doctor-card .btn {
+  width: 100%;
+}
+
+/* Appointments */
+.appointments-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.appointments-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.appointment-item {
+  background-color: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-color);
+  /* UPGRADE: Add shadow to lift item */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-out;
+}
+
+/* UPGRADE: Add hover effect to list items */
+.appointment-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.appointment-item h4 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.appointment-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-light);
+}
+
+.empty-message a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+/* Admin Panel */
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  /* UPGRADE: Add transform for 3D effect */
+  transform: translateY(0);
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* UPGRADE: Add hover effect for tabs */
+.tab-btn:hover:not(.active) {
+    color: var(--text-color);
+    background-color: rgba(0,0,0,0.02);
+    transform: translateY(-2px);
+}
+
+.admin-tab {
+  display: none;
+}
+
+.admin-tab.active {
+  display: block;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--surface-color);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  border-left: 4px solid var(--primary-color);
+  /* UPGRADE: Add shadow and transition */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease-out;
+}
+
+/* UPGRADE: Add hover effect to stat cards */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Admin Table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--surface-color);
+  border-radius: 10px;
+  overflow: hidden;
+  /* UPGRADE: Add shadow to table */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table thead {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(0, 102, 204, 0.05);
+  /* UPGRADE: Make row lift slightly (visual cue) */
+  transform: scale(1.01);
+}
+
+.admin-table .btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  /* UPGRADE: Reset 3D button effects for tiny table buttons */
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.admin-table .btn:hover {
+    transform: translateY(-1px);
+}
+
+.admin-table .btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+/* Feedback */
+.feedback-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.feedback-item {
+  background-color: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--secondary-color);
+  /* UPGRADE: Add shadow */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-rating {
+  color: var(--warning-color);
+  font-weight: bold;
+}
+
+/* Contact Section */
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-container h2 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-item {
+  background-color: var(--surface-color);
+  padding: 1.5rem;
+  border-radius: 10px;
+  /* UPGRADE: Add shadow */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.contact-item h3 {
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 1rem;
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  /* UPGRADE: Inset shadow for 3D "pressed" effect */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
+              0 0 5px rgba(0, 102, 204, 0.3);
+  background-color: var(--background-color); /* UPGRADE: Change bg on focus */
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* UPGRADE: Add blur to background */
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--background-color);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  /* UPGRADE: Add significant shadow to pop from overlay */
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-large {
+  max-width: 600px;
+}
+
+.close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--text-light);
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+.close:hover {
+  color: var(--text-color);
+  /* UPGRADE: 3D rotation */
+  transform: rotate(90deg);
+}
+
+/* Authentication */
+.auth-container {
+  width: 100%;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.auth-tab-btn {
+  background: none;
+  border: none;
+  padding: 0.75rem;
+  color: var(--text-light);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+  font-weight: 600;
+  /* UPGRADE: Add transform */
+  transform: translateY(0);
+}
+
+.auth-tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* UPGRADE: Add hover effect */
+.auth-tab-btn:hover:not(.active) {
+    color: var(--text-color);
+    transform: translateY(-2px);
+}
+
+.auth-form {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form.active {
+  display: flex;
+}
+
+.auth-form input {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  /* UPGRADE: Inset shadow for 3D "pressed" effect */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
+              0 0 5px rgba(0, 102, 204, 0.3);
+  background-color: var(--background-color);
+}
+
+/* Booking Form */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  font-size: 1rem;
+  font-family: inherit;
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  /* UPGRADE: Inset shadow for 3D "pressed" effect */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
+              0 0 5px rgba(0, 102, 204, 0.3);
+  background-color: var(--background-color);
+}
+
+/* Chatbot */
+.chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background-color: var(--surface-color);
+  border-radius: 15px; /* UPGRADE: Softer radius */
+  /* UPGRADE: More significant shadow to lift off page */
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.25);
+  display: none;
+  flex-direction: column;
+  z-index: 999;
+  overflow: hidden;
+  /* UPGRADE: Add transition for opening */
+  transition: all 0.3s ease-out;
+}
+
+.chatbot.active {
+  display: flex;
+  /* UPGRADE: Add opening animation */
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.chatbot-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* UPGRADE: Add text shadow to header */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.chatbot-header h3 {
+  margin: 0;
+}
+
+.close-chat {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* UPGRADE: Add hover effect to close button */
+.close-chat:hover {
+    transform: scale(1.1) rotate(90deg);
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  max-width: 80%;
+  word-wrap: break-word;
+  /* UPGRADE: Add shadow to messages */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.bot-message {
+  background-color: var(--primary-color);
+  color: white;
+  align-self: flex-start;
+}
+
+.user-message {
+  background-color: var(--secondary-color);
+  color: white;
+  align-self: flex-end;
+}
+
+.chatbot-input {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  /* UPGRADE: Add inner shadow */
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.chatbot-input input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  /* UPGRADE: Add transition */
+  transition: all 0.3s;
+}
+
+/* UPGRADE: Add focus state for chatbot input */
+.chatbot-input input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
+}
+
+.chatbot-input button {
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s; /* UPGRADE: Changed transition */
+  /* UPGRADE: Add 3D button effect */
+  box-shadow: 0 3px 0 0 #004a99;
+  transform: translateY(0);
+}
+
+.chatbot-input button:hover {
+  opacity: 0.9;
+  /* UPGRADE: "Press" effect */
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 0 #004a99;
+}
+
+.chatbot-input button:active {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 0 #004a99;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--surface-color);
+  color: var(--text-color);
+  padding: 3rem 1rem;
+  margin-top: 4rem;
+  /* UPGRADE: Use an inset shadow to create a 3D "break" from the body */
+  box-shadow: inset 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--border-color); /* Keep original border */
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-section a {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* UPGRADE: Add 3D hover to social links (assuming they are <a> tags) */
+.social-links a {
+    transition: all 0.3s ease-out;
+}
+.social-links a:hover {
+    transform: translateY(-3px) scale(1.1);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  text-align: center;
+  color: var(--text-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .hero-section {
+    grid-template-columns: 1fr;
+    /* UPGRADE: Reverse order so image is on top */
+    grid-auto-flow: dense;
+  }
+  
+  /* UPGRADE: Make content first on mobile */
+  .hero-content {
+      grid-row: 2;
+  }
+  .hero-image {
+      grid-row: 1;
+  }
+
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-section {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+  }
+
+  .chatbot {
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+    /* UPGRADE: Remove shadow on mobile full-screen */
+    box-shadow: none;
+  }
+
+  .filter-section {
+    flex-direction: column;
+  }
+
+  .filter-section input,
+  .filter-section select {
+    width: 100%;
+  }
+}

@@ -711,22 +711,45 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
+.contact-item:hover {
+  transform: translateY(-5px) translateZ(15px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
 .contact-item h3 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Added */
+}
+
+.contact-item:hover h3 {
+  transform: translateZ(25px);
+}
+.contact-item:hover p {
+  transform: translateZ(20px);
+}
+
+.contact-item p {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Added */
 }
 
 .map-container {
   position: relative;
   width: 100%;
   height: 0;
-  padding-bottom: 75%;
-  /* 4:3 aspect ratio */
+  padding-bottom: 75%; /* 4:3 aspect ratio */
   overflow: hidden;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Added */
+  transform-style: preserve-3d; /* Added */
+}
+
+.map-container:hover {
+  transform: translateY(-5px) translateZ(15px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
 }
 
 .map-container iframe {
@@ -736,6 +759,12 @@ body {
   width: 100%;
   height: 100%;
   border: 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Added */
+  transform: translateZ(0); /* Added */
+}
+
+.map-container:hover iframe {
+  transform: translateZ(30px) scale(1.03);
 }
 
 .contact-info .btn {

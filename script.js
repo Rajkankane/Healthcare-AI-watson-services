@@ -11,7 +11,7 @@ const appState = {
       availability: "Mon-Fri 9AM-5PM",
       fee: "$100",
       image: "https://placehold.co/600x400/007bff/ffffff?text=Dr+Johnson",
-    },
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/Psychiatrist.jpg?raw=true",     },
     {
       id: 2,
       name: "Dr. Michael Chen",
@@ -22,6 +22,7 @@ const appState = {
       availability: "Mon-Sat 10AM-6PM",
       fee: "$80",
       image: "https://placehold.co/600x400/28a745/ffffff?text=Dr+Chen",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/dermatology.jpg?raw=true",
     },
     {
       id: 3,
@@ -33,7 +34,7 @@ const appState = {
       availability: "Tue-Thu 8AM-4PM",
       fee: "$90",
       image: "https://placehold.co/600x400/ffc107/ffffff?text=Dr+Rodriguez",
-      // image: "",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/pediatrics.jpg?raw=true",
     },
     {
       id: 4,
@@ -45,6 +46,7 @@ const appState = {
       availability: "Mon-Fri 9AM-5PM",
       fee: "$120",
       image: "https://placehold.co/600x400/17a2b8/ffffff?text=Dr+Wilson",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/orthopedics.jpg?raw=true", 
     },
     {
       id: 5,
@@ -55,7 +57,8 @@ const appState = {
       location: "Neurological Institute",
       availability: "Wed-Fri 1PM-7PM",
       fee: "$110",
-      image: "https://placehold.co/600x400/6610f2/ffffff?text=Dr+Anderson",
+      image: "https://placehold.co/600x400/6610f2/ffffff?text=Dr+Anderson", 
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/neurology%20(2).jpg?raw=true",
     },
     {
       id: 6,
@@ -67,6 +70,7 @@ const appState = {
       availability: "Mon-Sun 9AM-9PM",
       fee: "$70",
       image: "https://placehold.co/600x400/dc3545/ffffff?text=Dr+Martinez",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/general-medicine.jpg?raw=true",
     },
     {
       id: 7,
@@ -78,6 +82,7 @@ const appState = {
       availability: "Mon-Sun 9AM-9PM",
       fee: "$70",
       image: "https://placehold.co/600x400/dc3545/ffffff?text=Dr+Pari",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/cardiology.jpg?raw=true",
     },
     {
       id: 8,
@@ -89,6 +94,7 @@ const appState = {
       availability: "Mon-Fri 9AM-5PM",
       fee: "$80",
       image: "https://placehold.co/600x400/007bff/ffffff?text=Dr+Ishan",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/neurology.jpg?raw=true",
     },
      {
       id: 9,
@@ -100,6 +106,7 @@ const appState = {
       availability: "Wed-Fri 1PM-7PM",
       fee: "$110",
       image: "https://placehold.co/600x400/6610f2/ffffff?text=Dr+Devanginee",
+      image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/orthopedics%20(2).jpg?raw=true",
     },
   ],
   appointments: [],

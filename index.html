@@ -39,7 +39,7 @@
                     </div>
             </div>
             <div class="hero-image">
-                <img src="https://placehold.co/600x400/007bff/ffffff?text=MediCare+Team" alt="Medical Team">
+                <img src="https://cdn.gamma.app/d60n7jj55g0bot8/edited-images/jkYLzbjvE6nCGb7VQwRQV.png" alt="Medical Team">
             </div>
         </div>
 
@@ -212,6 +212,23 @@
                         <h3>🕐 Hours</h3>
                         <p>24/7 Available</p>
                     </div>
+                    <h3>Our Location & Nearby Care</h3>
+                <p>Visit our main clinic in Indore, or use the button below to find a provider near your current location.</p>
+                
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235527.45265633633!2d75.68867373307775!3d22.7238711311724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec414d4e11699!2sIndore%2C%20Madhya%20Pradesh%2C%20India!5e0!3m2!1sen!2sus!4v1678886500000!5m2!1sen!2sus" 
+                        width="600" 
+                        height="450" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="checkNearbyHealthcare()">
+                    Check for Nearby Healthcare
+                </button>
                 </div>
                 <form class="contact-form" onsubmit="submitContactForm(event)">
                     <input type="text" placeholder="Your Name" required>
@@ -336,5 +353,6 @@
   });
 </script>
 <script src="server.js"></script>
+<script src="node.js"></script>
 </body>
 </html>

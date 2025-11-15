@@ -5,9 +5,8 @@
 }
 
 :root {
-  /* UPGRADE: More vibrant, modern colors */
-  --primary-color: #007bff; /* Was #0066cc */
-  --secondary-color: #28a745; /* Was #00b366 */
+  --primary-color: #007bff;
+  --secondary-color: #28a745;
   --accent-color: #ff6b6b;
   --background-color: #ffffff;
   --surface-color: #f5f5f5;
@@ -17,14 +16,11 @@
   --success-color: #28a745;
   --warning-color: #ffc107;
   --error-color: #dc3545;
-
-  /* UPGRADE: New shadow colors for buttons */
   --primary-shadow: rgba(0, 123, 255, 0.4);
   --secondary-shadow: rgba(40, 167, 69, 0.4);
 }
 
 body.dark-mode {
-  /* UPGRADE: Dark mode colors to match */
   --primary-color: #008cff;
   --secondary-color: #34c759;
   --accent-color: #ff8787;
@@ -36,14 +32,10 @@ body.dark-mode {
   --success-color: #34c759;
   --warning-color: #ffd43b;
   --error-color: #ff6b6b;
-  
-  /* UPGRADE: Add a subtle gradient for dark mode */
-  --background-image: radial-gradient(ellipse at top, 
-      hsla(0, 0%, 100%, 0.05), 
+  --background-image: radial-gradient(ellipse at top,
+      hsla(0, 0%, 100%, 0.05),
       transparent 70%
     );
-
-  /* UPGRADE: Dark mode shadow colors */
   --primary-shadow: rgba(0, 140, 255, 0.3);
   --secondary-shadow: rgba(52, 199, 89, 0.3);
 }
@@ -53,11 +45,10 @@ html {
 }
 
 body {
- font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--background-color);
-  /* UPGRADE: Add a subtle 3D background gradient to simulate lighting */
-  background-image: radial-gradient(ellipse at top, 
-      hsla(0, 0%, 50%, 0.1), 
+  background-image: radial-gradient(ellipse at top,
+      hsla(0, 0%, 50%, 0.1),
       transparent 70%
     );
   color: var(--text-color);
@@ -69,9 +60,8 @@ body {
 .navbar {
   background-color: var(--surface-color);
   padding: 1rem 0;
-  /* UPGRADE: Enhanced shadow for more depth */
-  box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.1), 
-              0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.1),
+    0 2px 5px rgba(0, 0, 0, 0.05);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -95,9 +85,8 @@ body {
   font-weight: bold;
   color: var(--primary-color);
   cursor: pointer;
-  /* UPGRADE: Add text shadow for depth */
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  text-decoration: none; /* UPGRADE: Remove underline from new link */
+  text-decoration: none;
 }
 
 .logo-icon {
@@ -113,12 +102,11 @@ body {
 .nav-links a {
   color: var(--text-color);
   text-decoration: none;
-  transition: color 0.3s, transform 0.3s; /* UPGRADE: Added transform */
+  transition: color 0.3s, transform 0.3s;
 }
 
 .nav-links a:hover {
   color: var(--primary-color);
-  /* UPGRADE: Subtle pop effect */
   transform: translateY(-2px);
 }
 
@@ -126,6 +114,8 @@ body {
   display: flex;
   gap: 1rem;
   align-items: center;
+  perspective: 500px;
+  /* Added: Adds depth to child 3D transforms */
 }
 
 .theme-toggle {
@@ -133,11 +123,10 @@ body {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* UPGRADE: Smoother transition */
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .theme-toggle:hover {
-  /* UPGRADE: 3D rotation effect */
   transform: scale(1.1) rotateY(180deg);
 }
 
@@ -148,22 +137,19 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
-  /* UPGRADE: Apply 3D button shadow and transition */
   transition: all 0.2s ease-out;
-  box-shadow: 0 3px 0 0 #0056b3; /* UPGRADE: Darker shade of new primary */
+  box-shadow: 0 3px 0 0 #0056b3;
   transform: translateY(0);
 }
 
 .auth-btn:hover {
   background-color: var(--primary-color);
   opacity: 0.9;
-  /* UPGRADE: "Press down" effect */
   transform: translateY(1px);
   box-shadow: 0 2px 0 0 #0056b3;
 }
 
 .auth-btn:active {
-  /* UPGRADE: Fully pressed effect */
   transform: translateY(3px);
   box-shadow: 0 0 0 0 #0056b3;
 }
@@ -189,20 +175,35 @@ body {
   gap: 2rem;
   align-items: center;
   margin-bottom: 4rem;
+  perspective: 1500px;
+  /* Added: Enables 3D space */
 }
 
 .hero-content h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
   color: var(--primary-color);
-  /* UPGRADE: Add text shadow for depth */
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease-out;
+  /* Added: For 3D hover */
 }
 
 .hero-content p {
   font-size: 1.1rem;
   color: var(--text-light);
   margin-bottom: 2rem;
+  transition: all 0.4s ease-out 0.1s;
+  /* Added: Staggered transition */
+}
+
+/* Added: Make hero text pop out in 3D on section hover */
+.hero-section:hover .hero-content h1 {
+  transform: translateZ(25px);
+  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hero-section:hover .hero-content p {
+  transform: translateZ(20px);
 }
 
 .hero-buttons {
@@ -214,15 +215,12 @@ body {
 .hero-image img {
   width: 100%;
   border-radius: 10px;
-  /* UPGRADE: Deeper, softer shadow */
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  /* UPGRADE: Add transition for 3D hover */
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* UPGRADE: Add 3D tilt effect on hover */
+/* Removed CSS transform from hover to allow JS tilt to take over */
 .hero-image:hover img {
-  transform: rotateY(-8deg) rotateX(4deg) scale(1.02);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
 }
 
@@ -231,23 +229,20 @@ body {
 .btn {
   padding: 0.75rem 2rem;
   border: none;
-  border-radius: 8px; /* UPGRADE: Slightly more rounded */
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s ease-out; /* UPGRADE: Smoother transition */
+  transition: all 0.2s ease-out;
   font-weight: 600;
-  /* UPGRADE: Add initial 3D state (slightly raised) */
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* UPGRADE: "Pressed" state for all buttons */
 .btn:active {
   transform: translateY(2px);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* UPGRADE: Accessibility focus state */
 .btn:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
@@ -255,31 +250,25 @@ body {
 
 
 .btn-primary {
-  /* UPGRADE: Add gradient background */
   background: linear-gradient(145deg, var(--primary-color), #0056b3);
   color: white;
-  /* UPGRADE: Add colored shadow for pop */
   box-shadow: 0 4px 15px var(--primary-shadow);
 }
 
 .btn-primary:hover {
   opacity: 0.9;
-  /* UPGRADE: Make it "pop out" more on hover */
   transform: translateY(-4px);
   box-shadow: 0 8px 20px var(--primary-shadow);
 }
 
 .btn-secondary {
-  /* UPGRADE: Add gradient background */
   background: linear-gradient(145deg, var(--secondary-color), #218838);
   color: white;
-  /* UPGRADE: Add colored shadow for pop */
   box-shadow: 0 4px 15px var(--secondary-shadow);
 }
 
 .btn-secondary:hover {
   opacity: 0.9;
-  /* UPGRADE: Make it "pop out" more on hover */
   transform: translateY(-4px);
   box-shadow: 0 8px 20px var(--secondary-shadow);
 }
@@ -301,6 +290,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
+  /* Added perspective for 3D tilt */
+  perspective: 1000px;
 }
 
 .service-card {
@@ -308,30 +299,42 @@ body {
   padding: 2rem;
   border-radius: 10px;
   text-align: center;
-  transition: all 0.3s ease-out; /* UPGRADE: Smoother transition */
+  transition: all 0.3s ease-out;
   border: 2px solid transparent;
-  /* UPGRADE: Add initial shadow */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  /* Added for 3D tilt effect */
+  transform-style: preserve-3d;
 }
 
 .service-card:hover {
-  /* UPGRADE: 3D "pop out" effect with translateZ */
-  transform: translateY(-10px) translateZ(30px);
+  /* Removed CSS transform to allow JS tilt to take over */
   border-color: var(--primary-color);
-  /* UPGRADE: Deeper shadow on hover */
   box-shadow: 0 15px 40px var(--primary-shadow);
 }
 
 .service-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
-  /* UPGRADE: Add text shadow to icon */
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Added */
 }
 
 .service-card h3 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Added */
+}
+
+/* Added: Make service card content "pop out" on hover */
+.service-card:hover .service-icon {
+  transform: translateZ(40px) rotateY(10deg);
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.service-card:hover h3 {
+  transform: translateZ(25px);
 }
 
 /* Stats Section */
@@ -339,16 +342,14 @@ body {
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   padding: 3rem;
-  border-radius: 15px; /* UPGRADE: Softer radius */
+  border-radius: 15px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   text-align: center;
   max-width: 1200px;
   margin: 3rem auto;
-  /* UPGRADE: Add shadow to lift the section off the page */
   box-shadow: 0 10px 40px rgba(0, 123, 255, 0.3);
-  /* UPGRADE: Add text-shadow for 3D text */
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -384,17 +385,15 @@ body {
   background-color: var(--surface-color);
   color: var(--text-color);
   font-size: 1rem;
-  /* UPGRADE: Add transition */
   transition: all 0.3s;
 }
 
-/* UPGRADE: Add 3D inset focus state */
 .filter-section input:focus,
 .filter-section select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px var(--primary-shadow);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
 
@@ -405,19 +404,22 @@ body {
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  /* Added perspective for 3D tilt */
+  perspective: 1000px;
 }
 
 .doctor-card {
   background-color: var(--surface-color);
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07); /* UPGRADE: Soften initial shadow */
-  transition: all 0.3s ease-out; /* UPGRADE: Smoother transition */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease-out;
+  /* Added for 3D tilt effect */
+  transform-style: preserve-3d;
 }
 
 .doctor-card:hover {
-  /* UPGRADE: Stronger 3D pop effect */
-  transform: translateY(-8px) scale(1.03);
+  /* Removed CSS transform to allow JS tilt to take over */
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
 }
 
@@ -425,10 +427,25 @@ body {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Added */
 }
 
 .doctor-info {
   padding: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Added */
+}
+
+/* Added: Make doctor card content "pop out" on hover */
+.doctor-card:hover .doctor-image {
+  transform: translateZ(25px) scale(1.03);
+  /* Lifts image */
+}
+
+.doctor-card:hover .doctor-info {
+  transform: translateZ(15px);
+  /* Lifts text block */
 }
 
 .doctor-info h3 {
@@ -473,15 +490,13 @@ body {
   padding: 1.5rem;
   border-radius: 10px;
   border-left: 4px solid var(--primary-color);
-  /* UPGRADE: Add shadow to lift item */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease-out;
 }
 
-/* UPGRADE: Add hover effect to list items */
 .appointment-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  transform: translateX(5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
 .appointment-item h4 {
@@ -529,7 +544,6 @@ body {
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s;
-  /* UPGRADE: Add transform for 3D effect */
   transform: translateY(0);
 }
 
@@ -538,11 +552,10 @@ body {
   border-bottom-color: var(--primary-color);
 }
 
-/* UPGRADE: Add hover effect for tabs */
 .tab-btn:hover:not(.active) {
-    color: var(--text-color);
-    background-color: rgba(0,0,0,0.02);
-    transform: translateY(-2px);
+  color: var(--text-color);
+  background-color: rgba(0, 0, 0, 0.02);
+  transform: translateY(-2px);
 }
 
 .admin-tab {
@@ -551,6 +564,8 @@ body {
 
 .admin-tab.active {
   display: block;
+  perspective: 800px;
+  /* Added: Add perspective for the table rows' 3D effect */
 }
 
 .stats-grid {
@@ -566,15 +581,13 @@ body {
   border-radius: 10px;
   text-align: center;
   border-left: 4px solid var(--primary-color);
-  /* UPGRADE: Add shadow and transition */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease-out;
 }
 
-/* UPGRADE: Add hover effect to stat cards */
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
 .stat-card h3 {
@@ -596,7 +609,6 @@ body {
   background-color: var(--surface-color);
   border-radius: 10px;
   overflow: hidden;
-  /* UPGRADE: Add shadow to table */
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
@@ -612,27 +624,33 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
+/* Added: Transition for table row hover */
+.admin-table tbody tr {
+  transition: all 0.3s ease-out;
+}
+
 .admin-table tbody tr:hover {
-  background-color: rgba(0, 123, 255, 0.05); /* UPGRADE: Use new primary color */
-  /* UPGRADE: Make row lift slightly (visual cue) */
-  transform: scale(1.01);
+  background-color: rgba(0, 123, 255, 0.05);
+  transform: translateZ(8px) scale(1.01);
+  /* Modified: 3D lift */
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.15);
+  /* Added: Shadow on lift */
 }
 
 .admin-table .btn {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  /* UPGRADE: Reset 3D button effects for tiny table buttons */
   transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .admin-table .btn:hover {
-    transform: translateY(-1px);
+  transform: translateY(-1px);
 }
 
 .admin-table .btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -647,7 +665,6 @@ body {
   padding: 1.5rem;
   border-radius: 10px;
   border-left: 4px solid var(--secondary-color);
-  /* UPGRADE: Add shadow */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -691,13 +708,38 @@ body {
   background-color: var(--surface-color);
   padding: 1.5rem;
   border-radius: 10px;
-  /* UPGRADE: Add shadow */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .contact-item h3 {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 75%;
+  /* 4:3 aspect ratio */
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.map-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.contact-info .btn {
+  width: 100%;
 }
 
 .contact-form {
@@ -715,7 +757,6 @@ body {
   color: var(--text-color);
   font-family: inherit;
   font-size: 1rem;
-  /* UPGRADE: Add transition */
   transition: all 0.3s;
 }
 
@@ -723,15 +764,15 @@ body {
 .contact-form textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  /* UPGRADE: Inset shadow for 3D "pressed" effect */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px var(--primary-shadow);
-  background-color: var(--background-color); /* UPGRADE: Change bg on focus */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 0 5px var(--primary-shadow);
+  background-color: var(--background-color);
 }
 
 /* Modal */
 .modal {
-  display: none;
+  /* display: none; */
+  /* Removed */
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -739,14 +780,24 @@ body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  /* UPGRADE: Add blur to background */
   backdrop-filter: blur(5px);
-}
 
-.modal.active {
+  /* Added animation properties */
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.modal.active {
+  /* display: flex; */
+  /* Removed */
+
+  /* Added animation properties */
+  opacity: 1;
+  visibility: visible;
 }
 
 .modal-content {
@@ -758,8 +809,18 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  /* UPGRADE: Add significant shadow to pop from overlay */
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+
+  /* Added animation properties */
+  opacity: 0;
+  transform: scale(0.8) rotateX(-20deg);
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* Added: Animate content to final state when modal is active */
+.modal.active .modal-content {
+  opacity: 1;
+  transform: scale(1) rotateX(0deg);
 }
 
 .modal-large {
@@ -773,13 +834,11 @@ body {
   font-size: 2rem;
   cursor: pointer;
   color: var(--text-light);
-  /* UPGRADE: Add transition */
   transition: all 0.3s;
 }
 
 .close:hover {
   color: var(--text-color);
-  /* UPGRADE: 3D rotation */
   transform: rotate(90deg);
 }
 
@@ -804,7 +863,6 @@ body {
   border-bottom: 3px solid transparent;
   transition: all 0.3s;
   font-weight: 600;
-  /* UPGRADE: Add transform */
   transform: translateY(0);
 }
 
@@ -813,10 +871,9 @@ body {
   border-bottom-color: var(--primary-color);
 }
 
-/* UPGRADE: Add hover effect */
 .auth-tab-btn:hover:not(.active) {
-    color: var(--text-color);
-    transform: translateY(-2px);
+  color: var(--text-color);
+  transform: translateY(-2px);
 }
 
 .auth-form {
@@ -836,16 +893,14 @@ body {
   background-color: var(--surface-color);
   color: var(--text-color);
   font-size: 1rem;
-  /* UPGRADE: Add transition */
   transition: all 0.3s;
 }
 
 .auth-form input:focus {
   outline: none;
   border-color: var(--primary-color);
-  /* UPGRADE: Inset shadow for 3D "pressed" effect */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px var(--primary-shadow);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
 
@@ -877,7 +932,6 @@ body {
   color: var(--text-color);
   font-size: 1rem;
   font-family: inherit;
-  /* UPGRADE: Add transition */
   transition: all 0.3s;
 }
 
@@ -886,13 +940,10 @@ body {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  /* UPGRADE: Inset shadow for 3D "pressed" effect */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 
-              0 0 5px var(--primary-shadow);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 0 5px var(--primary-shadow);
   background-color: var(--background-color);
 }
-
-/* --- UPGRADE: All .chatbot styles removed --- */
 
 /* Footer */
 .footer {
@@ -900,9 +951,8 @@ body {
   color: var(--text-color);
   padding: 3rem 1rem;
   margin-top: 4rem;
-  /* UPGRADE: Use an inset shadow to create a 3D "break" from the body */
   box-shadow: inset 0 5px 15px -5px rgba(0, 0, 0, 0.1);
-  border-top: 1px solid var(--border-color); /* Keep original border */
+  border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -941,12 +991,12 @@ body {
   gap: 1rem;
 }
 
-/* UPGRADE: Add 3D hover to social links (assuming they are <a> tags) */
 .social-links a {
-    transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
+
 .social-links a:hover {
-    transform: translateY(-3px) scale(1.1);
+  transform: translateY(-3px) scale(1.1);
 }
 
 .footer-bottom {
@@ -964,16 +1014,15 @@ body {
 
   .hero-section {
     grid-template-columns: 1fr;
-    /* UPGRADE: Reverse order so image is on top */
     grid-auto-flow: dense;
   }
-  
-  /* UPGRADE: Make content first on mobile */
+
   .hero-content {
-      grid-row: 2;
+    grid-row: 2;
   }
+
   .hero-image {
-      grid-row: 1;
+    grid-row: 1;
   }
 
 
@@ -985,6 +1034,7 @@ body {
     grid-template-columns: 1fr;
   }
 
+  /* Corrected this line */
   .stats-section {
     grid-template-columns: 1fr 1fr;
   }
@@ -992,8 +1042,6 @@ body {
   .contact-content {
     grid-template-columns: 1fr;
   }
-
-  /* UPGRADE: .chatbot styles removed, no media query needed */
 
   .filter-section {
     flex-direction: column;

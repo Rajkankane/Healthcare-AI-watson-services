@@ -67,6 +67,17 @@ const appState = {
       fee: "$70",
       image: "https://placehold.co/600x400/dc3545/ffffff?text=Dr+Martinez",
     },
+    {
+      id: 7,
+      name: "Dr. Raj Kankane",
+      specialty: "General Medicine",
+      rating: 4.5,
+      reviews: 423,
+      location: "Primary Care Clinic",
+      availability: "Mon-Sun 9AM-9PM",
+      fee: "$70",
+      image: "https://placehold.co/600x400/dc3545/ffffff?text=Dr+Raj",
+    },
   ],
   appointments: [],
   users: [
@@ -484,5 +495,11 @@ function submitContactForm(e) {
   alert("Thank you for your message! We will get back to you soon.");
   e.target.reset();
 }
-
-// --- UPGRADE: Removed redundant 'window.load' listener, merged into 'DOMContentLoaded' ---
+function submitContactForm(e) {
+  e.preventDefault();
+  alert("Thank you for your message! We will get back to you soon.");
+  e.target.reset();
+}
+function checkNearbyHealthcare() {
+  window.open('https://www.google.com/maps/search/healthcare+near+me', '_blank');
+}

@@ -25,6 +25,7 @@ body.dark-mode {
   --secondary-color: #34c759;
   --accent-color: #ff8787;
   --background-color: #1a1a1a;
+  background: linear-gradient(135deg,#000000,#002d9c,#0056b3,#007bff);
   --surface-color: #2d2d2d;
   --text-color: #ffffff;
   --text-light: #b0b0b0;
@@ -54,6 +55,7 @@ body {
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
   line-height: 1.6;
+  background:linear-gradient(135deg,#ffffff,#99bbcb,#66afc0,#399ac1); 
 }
 
 /* Navigation */

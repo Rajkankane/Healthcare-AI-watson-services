@@ -1,46 +1,58 @@
-// server.js — Advanced Full-Stack Backend for MediCare (Single File)
+// server.js
+// Single-file backend for MediCare (Node + Express + MongoDB + Mongoose)
+// Features:
+// - User / Doctor / Appointment / Feedback models
+// - Auth: register, login, refresh token (JWT + refresh token)
+// - Protected routes (authenticate + adminOnly)
+// - Seeding for initial doctors + admin
+// - Input validation with Zod
+// - Rate limiting, helmet, cors, morgan
+// - Simple error handling
 
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const swaggerUi = require('swagger-ui-express');
+const rateLimit = require('express-rate-limit');
 const { z } = require('zod');
 const path = require('path');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-prod';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'refresh-secret-change-in-prod';
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/medicare';
+const JWT_SECRET = process.env.JWT_SECRET || 'supersecret_access';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'supersecret_refresh';
+const CLIENT_URL = process.env.CLIENT_URL || '*';
 
-// === Middleware ===
+// --- Middleware ---
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_URL || '*' }));
 app.use(express.json({ limit: '10mb' }));
-app.use(morgan('combined'));
-app.use('/uploads', express.static('uploads'));
+app.use(morgan('tiny'));
+app.use(cors({ origin: CLIENT_URL }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Rate limiting
-const limiter = rateLimit({
+// Rate limiter (basic)
+const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: { error: 'Too many requests, please try again later.' }
+  max: 200,
+  message: { error: 'Too many requests from this IP, try again later.' }
 });
-app.use('/api/', limiter);
+app.use('/api/', apiLimiter);
 
-// === MongoDB Connection ===
+// --- Mongoose connect ---
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error('MongoDB Error:', err));
+  .then(() => console.log('MongoDB connected ✅'))
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
-// === Schemas & Models ===
-const UserSchema = new mongoose.Schema({
+// --- Schemas & Models ---
+const userSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   email: { type: String, required: true, unique: true, lowercase: true },
   phone: { type: String, required: true },
@@ -49,19 +61,21 @@ const UserSchema = new mongoose.Schema({
   joinDate: { type: Date, default: Date.now },
   isActive: { type: Boolean, default: true }
 });
+const User = mongoose.model('User', userSchema);
 
-const DoctorSchema = new mongoose.Schema({
+const doctorSchema = new mongoose.Schema({
   name: { type: String, required: true },
   specialty: { type: String, required: true },
-  rating: { type: Number, min: 0, max: 5, default: 4.5 },
+  rating: { type: Number, default: 4.5 },
   reviews: { type: Number, default: 0 },
-  location: { type: String, required: true },
-  availability: { type: String, required: true },
-  fee: { type: String, required: true },
-  image: { type: String, required: true }
+  location: String,
+  availability: String,
+  fee: String,
+  image: String,
 });
+const Doctor = mongoose.model('Doctor', doctorSchema);
 
-const AppointmentSchema = new mongoose.Schema({
+const appointmentSchema = new mongoose.Schema({
   doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'Doctor', required: true },
   doctorName: String,
   specialty: String,
@@ -74,274 +88,310 @@ const AppointmentSchema = new mongoose.Schema({
   status: { type: String, enum: ['pending', 'confirmed', 'cancelled'], default: 'pending' },
   createdAt: { type: Date, default: Date.now }
 });
+const Appointment = mongoose.model('Appointment', appointmentSchema);
 
-const FeedbackSchema = new mongoose.Schema({
+const feedbackSchema = new mongoose.Schema({
   patient: String,
   doctor: String,
-  rating: { type: Number, min: 1, max: 5, required: true },
-  comment: { type: String, required: true },
+  rating: { type: Number, min: 1, max: 5 },
+  comment: String,
   date: { type: Date, default: Date.now }
 });
+const Feedback = mongoose.model('Feedback', feedbackSchema);
 
-const User = mongoose.model('User', UserSchema);
-const Doctor = mongoose.model('Doctor', DoctorSchema);
-const Appointment = mongoose.model('Appointment', AppointmentSchema);
-const Feedback = mongoose.model('Feedback', FeedbackSchema);
-
-// === Validation Schemas (Zod) ===
+// --- Zod Validation schemas ---
 const registerSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
-  phone: z.string().regex(/^[\d\+\-\s]{10,15}$/),
+  phone: z.string().min(6),
   password: z.string().min(6),
-  confirmPassword: z.string()
-}).refine(d => d.password === d.confirmPassword, { message: "Passwords don't match" });
+  confirmPassword: z.string().min(6)
+}).refine(data => data.password === data.confirmPassword, { message: "Passwords must match" });
 
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6)
 });
 
-const appointmentSchema = z.object({
+const appointmentZ = z.object({
   doctorId: z.string().length(24),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  time: z.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/),
-  symptoms: z.string().min(10),
-  phone: z.string().regex(/^[\d\+\-\s]{10,15}$/)
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // YYYY-MM-DD
+  time: z.string().min(3),
+  symptoms: z.string().min(5),
+  phone: z.string().min(6)
 });
 
-// === JWT Helpers ===
-const generateTokens = (user) => {
-  const accessToken = jwt.sign(
-    { id: user._id, role: user.role },
-    JWT_SECRET,
-    { expiresIn: '15m' }
-  );
-  const refreshToken = jwt.sign(
-    { id: user._id },
-    JWT_REFRESH_SECRET,
-    { expiresIn: '7d' }
-  );
+// --- JWT helpers ---
+function generateTokens(user) {
+  const accessToken = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ id: user._id, role: user.role }, JWT_REFRESH_SECRET, { expiresIn: '7d' });
   return { accessToken, refreshToken };
-};
+}
 
-// === Auth Middleware ===
-const authenticate = async (req, res, next) => {
-  const authHeader = req.header('Authorization');
-  if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ error: 'Access denied' });
-
-  const token = authHeader.split(' ')[1];
+// --- Auth middleware ---
+async function authenticate(req, res, next) {
   try {
+    const header = req.headers.authorization;
+    if (!header || !header.startsWith('Bearer ')) return res.status(401).json({ error: 'Unauthorized' });
+    const token = header.split(' ')[1];
     const payload = jwt.verify(token, JWT_SECRET);
     req.user = payload;
     next();
   } catch (err) {
-    res.status(401).json({ error: 'Invalid or expired token' });
+    return res.status(401).json({ error: 'Invalid or expired token' });
   }
-};
+}
 
-const adminOnly = (req, res, next) => {
+function adminOnly(req, res, next) {
+  if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   if (req.user.role !== 'admin') return res.status(403).json({ error: 'Admin access required' });
   next();
-};
+}
 
-// === Seed Initial Data ===
-const seedData = async () => {
-  if (await Doctor.countDocuments() === 0) {
-    const doctors = [
-      { name: "Dr. Sarah Johnson", specialty: "Cardiology", rating: 4.8, reviews: 245, location: "Downtown Medical Center", availability: "Mon-Fri 9AM-5PM", fee: "$100", image: "https://placehold.co/600x400/007bff/ffffff?text=Dr+Johnson" },
-      { name: "Dr. Michael Chen", specialty: "Dermatology", rating: 4.9, reviews: 312, location: "Skin Care Clinic", availability: "Mon-Sat 10AM-6PM", fee: "$80", image: "https://placehold.co/600x400/28a745/ffffff?text=Dr+Chen" },
-      // Add more...
-    ];
-    await Doctor.insertMany(doctors);
-    console.log('Doctors seeded');
+// --- Seed data (doctors + admin) ---
+async function seedData() {
+  try {
+    const docCount = await Doctor.countDocuments();
+    if (docCount === 0) {
+      const seedDoctors = [
+        { name: "Dr. Sarah Johnson", specialty: "Cardiology", rating: 4.8, reviews: 245, location: "Downtown Medical Center", availability: "Mon-Fri 9AM-5PM", fee: "$100", image: "https://placehold.co/600x400/007bff/ffffff?text=Dr+Sarah" },
+        { name: "Dr. Michael Chen", specialty: "Dermatology", rating: 4.9, reviews: 312, location: "Skin Care Clinic", availability: "Mon-Sat 10AM-6PM", fee: "$80", image: "https://placehold.co/600x400/28a745/ffffff?text=Dr+Michael" },
+        { name: "Dr. Emily Rodriguez", specialty: "Pediatrics", rating: 4.7, reviews: 189, location: "Children's Hospital", availability: "Tue-Thu 8AM-4PM", fee: "$90", image: "https://placehold.co/600x400/ffc107/ffffff?text=Dr+Emily" },
+        { name: "Dr. James Wilson", specialty: "Orthopedics", rating: 4.6, reviews: 278, location: "Sports Medicine Center", availability: "Mon-Fri 9AM-5PM", fee: "$120", image: "https://placehold.co/600x400/17a2b8/ffffff?text=Dr+James" },
+        { name: "Dr. Lisa Anderson", specialty: "Neurology", rating: 4.9, reviews: 156, location: "Neurological Institute", availability: "Wed-Fri 1PM-7PM", fee: "$110", image: "https://placehold.co/600x400/6610f2/ffffff?text=Dr+Lisa" }
+      ];
+      await Doctor.insertMany(seedDoctors);
+      console.log('Seeded doctors.');
+    }
+
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      const hashed = await bcrypt.hash('admin123', 10);
+      await User.create({ name: 'Admin', email: 'admin@medicare.com', phone: '9999999999', password: hashed, role: 'admin' });
+      console.log('Admin user created: admin@medicare.com / admin123');
+    }
+  } catch (err) {
+    console.error('Seed error:', err);
   }
+}
 
-  if (await User.countDocuments() === 0) {
-    const hashed = await bcrypt.hash('admin123', 10);
-    await User.create({
-      name: 'Admin', email: 'admin@medicare.com', phone: '9999999999',
-      password: hashed, role: 'admin'
-    });
-    console.log('Admin user created: admin@medicare.com / admin123');
-  }
-};
+// call seed (non-blocking)
+seedData().catch(console.error);
 
-// === Routes ===
+// --- Routes ---
+// health
+app.get('/api/ping', (req, res) => res.json({ ok: true, time: new Date().toISOString() }));
 
 // Register
 app.post('/api/auth/register', async (req, res) => {
   try {
-    const data = registerSchema.parse(req.body);
-    delete data.confirmPassword;
+    const parsed = registerSchema.parse(req.body);
+    const { name, email, phone, password } = parsed;
 
-    if (await User.findOne({ email: data.email })) {
-      return res.status(400).json({ error: 'Email already exists' });
-    }
+    const exists = await User.findOne({ email });
+    if (exists) return res.status(400).json({ error: 'Email already registered' });
 
-    data.password = await bcrypt.hash(data.password, 10);
-    const user = await User.create(data);
-    const { accessToken, refreshToken } = generateTokens(user);
+    const hashed = await bcrypt.hash(password, 10);
+    const user = await User.create({ name, email, phone, password: hashed });
 
-    res.json({
-      message: 'Registered successfully',
-      accessToken,
-      refreshToken,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
-    });
+    const tokens = generateTokens(user);
+    return res.json({ message: 'Registered', user: { id: user._id, name: user.name, email: user.email }, ...tokens });
   } catch (err) {
-    res.status(400).json({ error: err.errors?.[0]?.message || err.message });
+    if (err.name === 'ZodError') return res.status(400).json({ error: err.errors.map(e => e.message).join(', ') });
+    return res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
 // Login
 app.post('/api/auth/login', async (req, res) => {
   try {
-    const { email, password } = loginSchema.parse(req.body);
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ error: 'Invalid credentials' });
-    }
+    const parsed = loginSchema.parse(req.body);
+    const { email, password } = parsed;
 
-    const { accessToken, refreshToken } = generateTokens(user);
-    res.json({
-      accessToken,
-      refreshToken,
-      user: { id: user._id, name: user.name, email: user.email, role: user.role }
-    });
+    const user = await User.findOne({ email });
+    if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const ok = await bcrypt.compare(password, user.password);
+    if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const tokens = generateTokens(user);
+    return res.json({ message: 'Logged in', user: { id: user._id, name: user.name, email: user.email, role: user.role }, ...tokens });
   } catch (err) {
-    res.status(400).json({ error: err.errors?.[0]?.message || 'Invalid input' });
+    if (err.name === 'ZodError') return res.status(400).json({ error: err.errors.map(e => e.message).join(', ') });
+    return res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
-// Refresh Token
+// Refresh access token
 app.post('/api/auth/refresh', (req, res) => {
-  const { token } = req.body;
-  if (!token) return res.status(401).json({ error: 'No token' });
+  try {
+    const { refreshToken } = req.body;
+    if (!refreshToken) return res.status(400).json({ error: 'No refresh token provided' });
 
-  jwt.verify(token, JWT_REFRESH_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: 'Invalid refresh token' });
-    const { accessToken } = generateTokens({ _id: user.id, role: user.role });
-    res.json({ accessToken });
-  });
+    jwt.verify(refreshToken, JWT_REFRESH_SECRET, (err, payload) => {
+      if (err) return res.status(403).json({ error: 'Invalid refresh token' });
+      // NOTE: payload contains id, role
+      const accessToken = jwt.sign({ id: payload.id, role: payload.role }, JWT_SECRET, { expiresIn: '15m' });
+      return res.json({ accessToken });
+    });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// Get Doctors
+// Get doctors (with optional search & specialty)
 app.get('/api/doctors', async (req, res) => {
-  const { specialty, search } = req.query;
-  let query = {};
-  if (specialty) query.specialty = specialty;
-  if (search) query.name = { $regex: search, $options: 'i' };
-
-  const doctors = await Doctor.find(query).select('-__v');
-  res.json(doctors);
+  try {
+    const { specialty, search } = req.query;
+    const q = {};
+    if (specialty) q.specialty = specialty;
+    if (search) q.name = { $regex: search, $options: 'i' };
+    const docs = await Doctor.find(q).select('-__v').lean();
+    return res.json(docs);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// Book Appointment
+// Create doctor (admin only)
+app.post('/api/admin/doctors', authenticate, adminOnly, async (req, res) => {
+  try {
+    const { name, specialty, rating, reviews, location, availability, fee, image } = req.body;
+    if (!name || !specialty) return res.status(400).json({ error: 'name & specialty required' });
+    const d = await Doctor.create({ name, specialty, rating, reviews, location, availability, fee, image });
+    return res.json(d);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+// Book appointment (authenticated)
 app.post('/api/appointments', authenticate, async (req, res) => {
   try {
-    const data = appointmentSchema.parse(req.body);
-    const doctor = await Doctor.findById(data.doctorId);
+    const parsed = appointmentZ.parse(req.body);
+    const { doctorId, date, time, symptoms, phone } = parsed;
+
+    // check doctor exists
+    const doctor = await Doctor.findById(doctorId);
     if (!doctor) return res.status(404).json({ error: 'Doctor not found' });
 
+    // convert date string to Date object (store as Date)
+    const appointmentDate = new Date(date + 'T00:00:00'); // store midnight (time in separate field)
+    const patient = await User.findById(req.user.id);
+    if (!patient) return res.status(404).json({ error: 'Patient not found' });
+
     const appointment = await Appointment.create({
-      ...data,
       doctor: doctor._id,
       doctorName: doctor.name,
       specialty: doctor.specialty,
-      patient: req.user.id,
-      patientName: (await User.findById(req.user.id)).name
+      patient: patient._id,
+      patientName: patient.name,
+      date: appointmentDate,
+      time,
+      symptoms,
+      phone,
+      status: 'confirmed'
     });
 
-    res.json({ message: 'Appointment booked', appointment });
+    return res.json({ message: 'Appointment booked', appointment });
   } catch (err) {
-    res.status(400).json({ error: err.errors?.[0]?.message || err.message });
+    if (err.name === 'ZodError') return res.status(400).json({ error: err.errors.map(e => e.message).join(', ') });
+    return res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
 
-// Get My Appointments
+// Get my appointments
 app.get('/api/appointments', authenticate, async (req, res) => {
-  const appointments = await Appointment.find({ patient: req.user.id })
-    .populate('doctor', 'name specialty')
-    .sort({ date: -1 });
-  res.json(appointments);
+  try {
+    const appts = await Appointment.find({ patient: req.user.id })
+      .populate('doctor', 'name specialty image')
+      .sort({ date: -1, createdAt: -1 });
+    return res.json(appts);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// === Admin Routes ===
-app.use('/api/admin', authenticate, adminOnly);
-
-// Admin: Dashboard Stats
-app.get('/api/admin/stats', async (req, res) => {
-  const [totalUsers, totalAppointments, totalDoctors] = await Promise.all([
-    User.countDocuments({ role: 'patient' }),
-    Appointment.countDocuments(),
-    Doctor.countDocuments()
-  ]);
-  res.json({ totalUsers, totalAppointments, totalDoctors });
+// Cancel appointment (patient)
+app.patch('/api/appointments/:id/cancel', authenticate, async (req, res) => {
+  try {
+    const appt = await Appointment.findById(req.params.id);
+    if (!appt) return res.status(404).json({ error: 'Appointment not found' });
+    if (appt.patient.toString() !== req.user.id && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Not allowed' });
+    }
+    appt.status = 'cancelled';
+    await appt.save();
+    return res.json({ message: 'Appointment cancelled', appointment: appt });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// Admin: All Appointments
-app.get('/api/admin/appointments', async (req, res) => {
-  const appointments = await Appointment.find({})
-    .populate('doctor', 'name')
-    .populate('patient', 'name email')
-    .sort({ createdAt: -1 });
-  res.json(appointments);
+// Admin: stats
+app.get('/api/admin/stats', authenticate, adminOnly, async (req, res) => {
+  try {
+    const [totalUsers, totalAppointments, totalDoctors] = await Promise.all([
+      User.countDocuments({ role: 'patient' }),
+      Appointment.countDocuments(),
+      Doctor.countDocuments()
+    ]);
+    return res.json({ totalUsers, totalAppointments, totalDoctors });
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// Admin: All Users
-app.get('/api/admin/users', async (req, res) => {
-  const users = await User.find({ role: 'patient' }).select('-password');
-  res.json(users);
+// Admin: list appointments
+app.get('/api/admin/appointments', authenticate, adminOnly, async (req, res) => {
+  try {
+    const appts = await Appointment.find()
+      .populate('doctor', 'name specialty')
+      .populate('patient', 'name email phone')
+      .sort({ createdAt: -1 });
+    return res.json(appts);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// Admin: Feedback
-app.get('/api/admin/feedback', async (req, res) => {
-  const feedback = await Feedback.find().sort({ date: -1 });
-  res.json(feedback);
+// Admin: list users
+app.get('/api/admin/users', authenticate, adminOnly, async (req, res) => {
+  try {
+    const users = await User.find({ role: 'patient' }).select('-password').sort({ joinDate: -1 });
+    return res.json(users);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
+// Feedback: post & get
 app.post('/api/feedback', async (req, res) => {
-  const { patient, doctor, rating, comment } = req.body;
-  const fb = await Feedback.create({ patient, doctor, rating, comment });
-  res.json(fb);
+  try {
+    const { patient, doctor, rating, comment } = req.body;
+    if (!rating || !comment) return res.status(400).json({ error: 'rating and comment required' });
+    const fb = await Feedback.create({ patient, doctor, rating, comment });
+    return res.json(fb);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+app.get('/api/feedback', async (req, res) => {
+  try {
+    const all = await Feedback.find().sort({ date: -1 });
+    return res.json(all);
+  } catch (err) {
+    return res.status(500).json({ error: 'Server error', details: err.message });
+  }
 });
 
-// === Swagger API Docs ===
-const swaggerDocument = {
-  openapi: '3.0.0',
-  info: { title: 'MediCare API', version: '1.0.0' },
-  servers: [{ url: `http://localhost:${PORT}/api` }],
-  components: {
-    securitySchemes: { bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' } }
-  },
-  paths: {
-    '/auth/register': { post: { summary: 'Register user', requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/Register' } } } }, responses: { '200': { description: 'Success' } } } },
-    // Add more paths as needed
-  },
-  components: { schemas: { Register: { type: 'object', properties: { name: { type: 'string' }, email: { type: 'string' }, phone: { type: 'string' }, password: { type: 'string' } } } } }
-};
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// === Serve Frontend (Production) ===
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend/dist')));
-  app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'frontend/dist/index.html')));
-} else {
-  app.use(express.static(path.join(__dirname, 'frontend')));
-  app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'frontend/index.html')));
-}
-
-// === Error Handler ===
+// Basic error handler
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error('Unhandled error:', err);
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// === Start Server ===
-app.listen(PORT, async () => {
-  await seedData();
-  console.log(`MediCare Backend running on http://localhost:${PORT}`);
-  console.log(`API Docs: http://localhost:${PORT}/api-docs`);
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
 });

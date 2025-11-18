@@ -180,3 +180,28 @@ GET /api/admin/users: Get all users (admin only).
 🧑‍💻 Author
 
 Raj Kankane And Team
+This is an example file.
+
+Create a .env file in the root directory and add your own values.
+
+DO NOT commit your .env file to Git.
+
+Server Configuration
+
+PORT=5000
+NODE_ENV=development
+
+MongoDB Connection
+
+MONGO_URI=mongodb://127.0.0.1:27017/medicare
+
+JWT Secrets (Use strong, random strings)
+
+JWT_SECRET=your_very_long_random_jwt_secret_here_2025
+JWT_REFRESH_SECRET=your_refresh_secret_2025
+
+Frontend URL (for CORS)
+
+If using VS Code Live Server, default is https://www.google.com/search?q=http://127.0.0.1:5500
+
+CLIENT_URL=https://www.google.com/search?q=http://127.0.0.1:5500

@@ -107,7 +107,7 @@ const appState = {
       fee: "$110",
       image: "https://placehold.co/600x400/6610f2/ffffff?text=Dr+Devanginee",
       image: "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/orthopedics%20(2).jpg?raw=true",
-    },
+    }, 
   ],
   appointments: [],
   users: [

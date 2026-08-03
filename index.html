@@ -3,355 +3,724 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediCare - Healthcare Platform</title>
+    <meta name="description" content="MediCare - Modern Healthcare Platform for virtual consultations, verified specialist doctors, and digital health tools.">
+    <meta name="theme-color" content="#06b6d4">
+    <title>MediCare - Modern Healthcare Platform</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
-    <nav class="navbar">
+    <!-- Scroll Progress Indicator -->
+    <div id="scrollProgress" class="scroll-progress-bar" aria-hidden="true"></div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Ambient Glow Elements -->
+    <div class="ambient-glow-container" aria-hidden="true">
+        <div class="ambient-glow glow-blue"></div>
+        <div class="ambient-glow glow-cyan"></div>
+        <div class="ambient-glow glow-teal"></div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="navbar" id="navbar" role="banner">
         <div class="nav-container">
-            <a href="#home" class="logo" onclick="navigateTo('home')">
-                <span class="logo-icon">⚕️</span>
-                <span class="logo-text">MediCare</span>
+            <a href="#home" class="logo" onclick="navigateTo('home')" aria-label="MediCare Home Page">
+                <span class="logo-icon-wrapper" aria-hidden="true">
+                    <span class="logo-icon">⚕️</span>
+                </span>
+                <span class="logo-text">Medi<span class="logo-highlight">Care</span></span>
             </a>
-            <ul class="nav-links">
-                <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
-                <li><a href="#doctors" onclick="navigateTo('doctors')">Doctors</a></li>
-                <li><a href="#appointments" onclick="navigateTo('appointments')">Appointments</a></li>
-                <li><a href="#admin" onclick="navigateTo('admin')">Admin</a></li>
-                <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
-            </ul>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav id="primary-navigation" class="nav-links-wrapper" role="navigation" aria-label="Main Navigation">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="nav-link active" onclick="navigateTo('home')">Home</a></li>
+                    <li><a href="#doctors" class="nav-link" onclick="navigateTo('doctors')">Doctors</a></li>
+                    <li><a href="#tools" class="nav-link" onclick="navigateTo('tools')">Health Tools</a></li>
+                    <li><a href="#appointments" class="nav-link" onclick="navigateTo('appointments')">Appointments</a></li>
+                    <li><a href="#contact" class="nav-link" onclick="navigateTo('contact')">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Actions: Theme Toggle & Login -->
             <div class="nav-actions">
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
-                    <span class="theme-icon">🌙</span>
+                <button class="theme-toggle glass-btn" onclick="toggleTheme()" aria-label="Toggle dark and light mode" title="Toggle dark/light mode" type="button">
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
                 </button>
-                <button class="auth-btn" onclick="handleAuthClick()">Login / Sign Up</button>
+                <div id="userProfileBadge" class="user-profile-badge hidden" onclick="navigateTo('appointments')">
+                    <span id="navUserAvatar" class="avatar-circle">U</span>
+                    <span id="navUserName" class="user-name-text">Patient</span>
+                </div>
+                <button class="auth-btn btn btn-cyan-gradient" onclick="handleAuthClick()" type="button">
+                    <span>Login / Sign Up</span>
+                </button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <section id="home" class="page active">
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1>Welcome to MediCare</h1>
-                <p>Your trusted healthcare platform for online consultations and appointment booking</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" onclick="navigateTo('doctors')">Book an Appointment</button>
+    <!-- Main Content Area -->
+    <main id="main-content">
+        <!-- HOME PAGE -->
+        <section id="home" class="page active" role="region" aria-label="Home Overview">
+            <div class="hero-section glass-card reveal">
+                <div class="hero-content">
+                    <h1>Smart Healthcare for Your Family</h1>
+                    <p>Experience seamless online medical consultations, instant specialist bookings, digital prescription tracking, and AI-powered health triage with top-tier security and speed.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-cyan-gradient ripple-btn" onclick="navigateTo('doctors')" type="button">
+                            <span>Book an Appointment</span>
+                            <span class="btn-arrow" aria-hidden="true">→</span>
+                        </button>
+                        <button class="btn btn-glass-secondary ripple-btn" onclick="navigateTo('tools')" type="button">
+                            <span>Check Symptoms</span>
+                        </button>
                     </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <div class="glass-image-frame">
+                        <img src="https://cdn.gamma.app/d60n7jj55g0bot8/edited-images/jkYLzbjvE6nCGb7VQwRQV.png" alt="Friendly Healthcare Specialists" class="hero-image">
+                        <div class="glass-floating-tag">
+                            <span class="pulse-dot"></span>
+                            <span>24/7 Verified Doctors Online</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="hero-image">
-                <img src="https://cdn.gamma.app/d60n7jj55g0bot8/edited-images/jkYLzbjvE6nCGb7VQwRQV.png" alt="Medical Team">
-            </div>
-        </div>
 
-        <section class="services-section">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🏥</div>
-                    <h3>Online Consultation</h3>
-                    <p>Connect with experienced doctors from home</p>
+            <!-- Features Highlight Strip -->
+            <div class="features-highlight-strip glass-card reveal">
+                <div class="highlight-item">
+                    <span class="highlight-icon">⚡</span>
+                    <div>
+                        <h4>Instant Consultation</h4>
+                        <p>Connect within 15 minutes</p>
+                    </div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">📅</div>
-                    <h3>Easy Booking</h3>
-                    <p>Schedule appointments at your convenience</p>
+                <div class="highlight-item">
+                    <span class="highlight-icon">🔒</span>
+                    <div>
+                        <h4>100% Encrypted</h4>
+                        <p>HIPAA compliant records</p>
+                    </div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">💊</div>
-                    <h3>Prescriptions</h3>
-                    <p>Get digital prescriptions instantly</p>
+                <div class="highlight-item">
+                    <span class="highlight-icon">📋</span>
+                    <div>
+                        <h4>Digital Rx</h4>
+                        <p>Verified digital prescriptions</p>
+                    </div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🔒</div>
-                    <h3>Secure Data</h3>
-                    <p>Your health data is completely secure</p>
+                <div class="highlight-item">
+                    <span class="highlight-icon">⭐</span>
+                    <div>
+                        <h4>Top Specialists</h4>
+                        <p>4.8+ Patient satisfaction rating</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <section class="services-section">
+                <div class="section-header text-center reveal">
+                    <span class="section-subtitle">What We Offer</span>
+                    <h2>Comprehensive Medical Services</h2>
+                </div>
+                <div class="services-grid">
+                    <article class="service-card glass-card reveal">
+                        <div class="service-icon-wrapper">
+                            <span class="service-icon" aria-hidden="true">🏥</span>
+                        </div>
+                        <h3>Online Consultation</h3>
+                        <p>Connect with experienced specialist doctors anywhere via encrypted HD video calls.</p>
+                        <button class="service-link-btn" onclick="navigateTo('doctors')">Find Doctor ➔</button>
+                    </article>
+                    <article class="service-card glass-card reveal">
+                        <div class="service-icon-wrapper">
+                            <span class="service-icon" aria-hidden="true">📅</span>
+                        </div>
+                        <h3>Easy Booking</h3>
+                        <p>Schedule and manage appointment slots effortlessly with real-time availability updates.</p>
+                        <button class="service-link-btn" onclick="navigateTo('doctors')">View Slots ➔</button>
+                    </article>
+                    <article class="service-card glass-card reveal">
+                        <div class="service-icon-wrapper">
+                            <span class="service-icon" aria-hidden="true">💊</span>
+                        </div>
+                        <h3>Digital Prescriptions</h3>
+                        <p>Receive official, verifiable digital prescriptions instantly after every consultation.</p>
+                        <button class="service-link-btn" onclick="navigateTo('appointments')">My Records ➔</button>
+                    </article>
+                    <article class="service-card glass-card reveal">
+                        <div class="service-icon-wrapper">
+                            <span class="service-icon" aria-hidden="true">🧠</span>
+                        </div>
+                        <h3>Smart Triage & BMI</h3>
+                        <p>Evaluate your symptoms and monitor key wellness indicators with interactive health calculators.</p>
+                        <button class="service-link-btn" onclick="navigateTo('tools')">Open Tools ➔</button>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section glass-card reveal">
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="500">0</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Verified Doctors</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="50">0</span><span class="stat-plus">K+</span>
+                    <span class="stat-label">Happy Patients</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number counter" data-target="100">0</span><span class="stat-plus">K+</span>
+                    <span class="stat-label">Consultations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Support & Triage</span>
+                </div>
+            </section>
+
+            <!-- Testimonials Carousel Section -->
+            <section class="testimonials-section reveal">
+                <div class="section-header text-center">
+                    <span class="section-subtitle">Patient Testimonials</span>
+                    <h2>Trusted by Thousands of Patients</h2>
+                </div>
+                <div class="testimonial-slider-wrapper glass-card">
+                    <button class="slider-arrow prev-arrow" onclick="prevTestimonial()" aria-label="Previous Testimonial">❮</button>
+                    <div class="testimonial-container" id="testimonialContainer">
+                        <div class="testimonial-slide active">
+                            <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                            <p class="testimonial-text">"MediCare made booking a cardiology consultation completely stress-free. The doctor was attentive, and I had my digital prescription within minutes!"</p>
+                            <div class="testimonial-author">
+                                <span class="author-avatar">JD</span>
+                                <div>
+                                    <h4 class="author-name">John Doe</h4>
+                                    <span class="author-role">Verified Patient</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-slide">
+                            <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+                            <p class="testimonial-text">"The symptom checker recommended I see a dermatologist promptly. I booked Dr. Chen directly from the tool and received incredible skin care advice."</p>
+                            <div class="testimonial-author">
+                                <span class="author-avatar">JS</span>
+                                <div>
+                                    <h4 class="author-name">Jane Smith</h4>
+                                    <span class="author-role">Verified Patient</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="slider-arrow next-arrow" onclick="nextTestimonial()" aria-label="Next Testimonial">❯</button>
+                    <div class="slider-dots" id="sliderDots">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+                <div class="text-center" style="margin-top: 1.5rem;">
+                    <button class="btn btn-glass-secondary ripple-btn" onclick="openReviewModal()" type="button">
+                        ✍️ Leave Patient Review
+                    </button>
+                </div>
+            </section>
+        </section>
+
+        <!-- DOCTORS PAGE -->
+        <section id="doctors" class="page" role="region" aria-label="Doctors Directory">
+            <div class="doctors-header glass-card">
+                <div class="header-text">
+                    <h2>Find & Consult Specialist Doctors</h2>
+                    <p>Browse our verified network of board-certified healthcare professionals.</p>
+                </div>
+                <div class="filter-section">
+                    <div class="input-glass-wrapper search-box">
+                        <span class="search-icon" aria-hidden="true">🔍</span>
+                        <input type="text" id="searchDoctor" placeholder="Search doctor name, specialty, or clinic..." onkeyup="filterDoctors()" aria-label="Search doctors by name or specialty">
+                    </div>
+                    <div class="input-glass-wrapper select-box">
+                        <select id="specialtyFilter" onchange="filterDoctors()" aria-label="Filter by medical specialty">
+                            <option value="">All Specialties</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Psychiatrist">Psychiatry</option>
+                            <option value="General Medicine">General Medicine</option>
+                        </select>
+                    </div>
+                    <div class="input-glass-wrapper select-box">
+                        <select id="sortFilter" onchange="filterDoctors()" aria-label="Sort doctors list">
+                            <option value="rating-desc">Sort by: Highest Rated</option>
+                            <option value="fee-asc">Sort by: Lowest Fee</option>
+                            <option value="name-asc">Sort by: Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="doctors-grid" id="doctorsGrid">
+                <!-- Rendered dynamically via JavaScript -->
+            </div>
+        </section>
+
+        <!-- HEALTH TOOLS PAGE (Symptom Checker & BMI Calculator) -->
+        <section id="tools" class="page" role="region" aria-label="Interactive Health Tools">
+            <div class="page-title-box glass-card text-center">
+                <h2>Interactive Patient Health Tools</h2>
+                <p>Check symptoms, get triage advice, and calculate key body metrics instantly.</p>
+            </div>
+
+            <div class="tools-grid">
+                <!-- Tool 1: AI Symptom Checker & Health Triage -->
+                <div class="tool-card glass-card">
+                    <div class="tool-header">
+                        <span class="tool-badge">🩺 Smart Diagnostic Assistant</span>
+                        <h3>AI Symptom Checker & Health Triage</h3>
+                        <p>Select your symptoms and severity to receive immediate guidance on recommended medical specialists.</p>
+                    </div>
+
+                    <form id="symptomCheckerForm" onsubmit="calculateSymptomTriage(event)">
+                        <div class="form-group">
+                            <label>Select Your Current Symptoms:</label>
+                            <div class="symptom-tags-grid" id="symptomTagsContainer">
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="chest_pain">
+                                    <span class="tag-chip">❤️ Chest Pain / Pressure</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="skin_rash">
+                                    <span class="tag-chip">🩺 Skin Rash / Itching</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="headache_dizziness">
+                                    <span class="tag-chip">🧠 Severe Headache / Dizziness</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="joint_pain">
+                                    <span class="tag-chip">🦴 Joint or Bone Pain</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="child_fever">
+                                    <span class="tag-chip">👶 Pediatric Fever / Cough</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="anxiety_stress">
+                                    <span class="tag-chip">🧘 Stress / Anxiety / Sleep Issue</span>
+                                </label>
+                                <label class="symptom-checkbox-label">
+                                    <input type="checkbox" name="symptom" value="general_fatigue">
+                                    <span class="tag-chip">🤒 General Fatigue / Mild Fever</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="symptomSeverity">Symptom Severity Level:</label>
+                            <select id="symptomSeverity" required>
+                                <option value="mild">Mild (Bothersome, but manageable)</option>
+                                <option value="moderate" selected>Moderate (Affecting daily activities)</option>
+                                <option value="severe">Severe (Requires immediate attention)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-cyan-gradient ripple-btn full-width">
+                            <span>Analyze Symptoms & Find Specialist</span>
+                        </button>
+                    </form>
+
+                    <!-- Triage Result Card -->
+                    <div id="triageResultBox" class="triage-result-box hidden">
+                        <div class="triage-header">
+                            <span id="triageStatusBadge" class="status-pill info">Triage Analysis</span>
+                            <h4 id="triageTitle">Recommended Care Path</h4>
+                        </div>
+                        <p id="triageAdviceText">Select symptoms above to see your recommended care path.</p>
+                        <div class="triage-doctor-recommendation" id="triageDocRecommend">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 2: BMI & Wellness Calculator -->
+                <div class="tool-card glass-card">
+                    <div class="tool-header">
+                        <span class="tool-badge">⚖️ Body & Fitness Metric</span>
+                        <h3>BMI & Wellness Calculator</h3>
+                        <p>Calculate your Body Mass Index (BMI) and discover personalized target wellness insights.</p>
+                    </div>
+
+                    <form id="bmiCalculatorForm" onsubmit="calculateBMI(event)">
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="bmiHeight">Height (cm):</label>
+                                <input type="number" id="bmiHeight" placeholder="e.g. 175" min="50" max="250" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bmiWeight">Weight (kg):</label>
+                                <input type="number" id="bmiWeight" placeholder="e.g. 70" min="20" max="300" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="bmiAge">Age (Years):</label>
+                                <input type="number" id="bmiAge" placeholder="e.g. 28" min="2" max="120" value="25" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bmiGender">Gender:</label>
+                                <select id="bmiGender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-cyan-gradient ripple-btn full-width">
+                            <span>Calculate BMI & Health Insights</span>
+                        </button>
+                    </form>
+
+                    <!-- BMI Result Card -->
+                    <div id="bmiResultBox" class="bmi-result-box hidden">
+                        <div class="bmi-score-wrapper">
+                            <div class="bmi-score-circle">
+                                <span id="bmiScoreNumber" class="score-num">--</span>
+                                <span class="score-label">BMI Score</span>
+                            </div>
+                            <div class="bmi-category-info">
+                                <span id="bmiCategoryBadge" class="bmi-pill">Normal</span>
+                                <h4 id="bmiCategoryTitle">Healthy Weight</h4>
+                                <p id="bmiRangeText">Ideal weight range: 58 kg - 75 kg</p>
+                            </div>
+                        </div>
+
+                        <div class="bmi-progress-meter">
+                            <div class="meter-bar">
+                                <div id="bmiPointer" class="meter-pointer" style="left: 50%;"></div>
+                            </div>
+                            <div class="meter-labels">
+                                <span>Underweight (&lt;18.5)</span>
+                                <span>Normal (18.5-24.9)</span>
+                                <span>Overweight (25-29.9)</span>
+                                <span>Obese (30+)</span>
+                            </div>
+                        </div>
+
+                        <div id="bmiAdviceBox" class="bmi-advice-tips">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="stats-section">
-            <div class="stat">
-                <h3>500+</h3>
-                <p>Verified Doctors</p>
+        <!-- APPOINTMENTS PAGE -->
+        <section id="appointments" class="page" role="region" aria-label="Patient Appointments">
+            <div class="page-title-box glass-card">
+                <h2>My Scheduled Appointments</h2>
+                <p>Track, manage, and review your upcoming virtual doctor consultations.</p>
             </div>
-            <div class="stat">
-                <h3>50K+</h3>
-                <p>Happy Patients</p>
-            </div>
-            <div class="stat">
-                <h3>100K+</h3>
-                <p>Consultations</p>
-            </div>
-            <div class="stat">
-                <h3>24/7</h3>
-                <p>Support Available</p>
+            <div class="appointments-container">
+                <div id="appointmentsList" class="appointments-list">
+                    <div class="empty-message glass-card text-center">
+                        <p>No appointments scheduled yet. <a href="#doctors" onclick="navigateTo('doctors')">Book your first doctor consultation now!</a></p>
+                    </div>
+                </div>
             </div>
         </section>
-    </section>
 
-    <section id="doctors" class="page">
-        <div class="doctors-header">
-            <h2>Find a Doctor</h2>
-            <div class="filter-section">
-                <input type="text" id="searchDoctor" placeholder="Search by name or specialty" onkeyup="filterDoctors()">
-                <select id="specialtyFilter" onchange="filterDoctors()">
-                    <option value="">All Specialties</option>
-                    <option value="Cardiology">Cardiology</option>
-                    <option value="Dermatology">Dermatology</option>
-                    <option value="Neurology">Neurology</option>
-                    <option value="Orthopedics">Orthopedics</option>
-                    <option value="Pediatrics">Pediatrics</option>
-                </select>
-            </div>
-        </div>
-        <div class="doctors-grid" id="doctorsGrid">
-            </div>
-    </section>
+        <!-- CONTACT PAGE -->
+        <section id="contact" class="page" role="region" aria-label="Contact Information">
+            <div class="contact-container">
+                <div class="section-header text-center">
+                    <h2>Get in Touch With Us</h2>
+                    <p>Have questions or need emergency assistance? Reach out to our medical support team 24/7.</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info glass-card">
+                        <div class="contact-item">
+                            <div class="contact-icon-box" aria-hidden="true">📍</div>
+                            <div>
+                                <h3>Main Office</h3>
+                                <p>123 Medical Plaza, Health City, HC 12345</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon-box" aria-hidden="true">📞</div>
+                            <div>
+                                <h3>Phone Support</h3>
+                                <p>1-800-MEDICARE (24/7 Toll Free)</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon-box" aria-hidden="true">✉️</div>
+                            <div>
+                                <h3>Email Enquiries</h3>
+                                <p>support@medicare.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon-box" aria-hidden="true">🕐</div>
+                            <div>
+                                <h3>Working Hours</h3>
+                                <p>24/7 Emergency & Virtual Consultation</p>
+                            </div>
+                        </div>
 
-    <section id="appointments" class="page">
-        <h2>My Appointments</h2>
-        <div class="appointments-container">
-            <div id="appointmentsList" class="appointments-list">
-                <p class="empty-message">No appointments yet. <a href="#doctors" onclick="navigateTo('doctors')">Book one now!</a></p>
-            </div>
-        </div>
-    </section>
+                        <div class="location-box">
+                            <h3>Our Location & Nearby Care</h3>
+                            <p>Visit our primary facility in Indore, or locate nearby verified healthcare providers instantly.</p>
+                            
+                            <div class="map-container glass-card">
+                                <iframe 
+                                    title="Google Map showing MediCare location in Indore"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235527.45265633633!2d75.68867373307775!3d22.7238711311724!2m3!1f0!1f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec414d4e11699!2sIndore%2C%20Madhya%20Pradesh%2C%20India!5e0!3m2!1sen!2sus!4v1678886500000!5m2!1sen!2sus" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                            
+                            <button class="btn btn-cyan-gradient full-width ripple-btn" onclick="checkNearbyHealthcare()" type="button">
+                                🌐 Locate Healthcare Near Me
+                            </button>
+                        </div>
+                    </div>
 
-    <section id="admin" class="page">
-        <div class="admin-container">
-            <h2>Admin Dashboard</h2>
-            <div class="admin-tabs">
-                <button class="tab-btn active" onclick="switchAdminTab(event, 'overview')">Overview</button>
-                <button class="tab-btn" onclick="switchAdminTab(event, 'appointments')">Appointments</button>
-                <button class="tab-btn" onclick="switchAdminTab(event, 'users')">Users</button>
-                <button class="tab-btn" onclick="switchAdminTab(event, 'feedback')">Feedback</button>
-            </div>
-
-            <div id="overview-tab" class="admin-tab active">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>Total Appointments</h3>
-                        <p class="stat-number" id="totalAppointments">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Users</h3>
-                        <p class="stat-number" id="totalUsers">0</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Total Doctors</h3>
-                        <p class="stat-number">15</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Revenue</h3>
-                        <p class="stat-number">$12,500</p>
-                    </div>
+                    <!-- Contact Form -->
+                    <form class="contact-form glass-card" onsubmit="submitContactForm(event)">
+                        <h3>Send Us a Message</h3>
+                        <p>Fill out the form below and our medical team will respond promptly.</p>
+                        
+                        <div class="form-group">
+                            <label for="contact-name">Your Full Name</label>
+                            <input type="text" id="contact-name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Your Email Address</label>
+                            <input type="email" id="contact-email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" placeholder="General Inquiry / Virtual Consultation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" placeholder="Type your message here..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-cyan-gradient ripple-btn">Send Message</button>
+                    </form>  
                 </div>
             </div>
+        </section>
+    </main>
 
-            <div id="appointments-tab" class="admin-tab">
-                <h3>Manage Appointments</h3>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Patient</th>
-                            <th>Doctor</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="appointmentsTableBody">
-                        </tbody>
-                </table>
-            </div>
-
-            <div id="users-tab" class="admin-tab">
-                <h3>Manage Users</h3>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Join Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                        </tbody>
-                </table>
-            </div>
-
-            <div id="feedback-tab" class="admin-tab">
-                <h3>User Feedback</h3>
-                <div id="feedbackList" class="feedback-list">
-                    </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="page">
-        <div class="contact-container">
-            <h2>Contact Us</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h3>📍 Address</h3>
-                        <p>123 Medical Plaza, Health City, HC 12345</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>📞 Phone</h3>
-                        <p>1-800-MEDICARE</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>✉️ Email</h3>
-                        <p>support@medicare.com</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>🕐 Hours</h3>
-                        <p>24/7 Available</p>
-                    </div>
-                    <h3>Our Location & Nearby Care</h3>
-                <p>Visit our main clinic in Indore, or use the button below to find a provider near your current location.</p>
-                
-                <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235527.45265633633!2d75.68867373307775!3d22.7238711311724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fcad1b410ddb%3A0x96ec414d4e11699!2sIndore%2C%20Madhya%20Pradesh%2C%20India!5e0!3m2!1sen!2sus!4v1678886500000!5m2!1sen!2sus" 
-                        width="600" 
-                        height="450" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="checkNearbyHealthcare()">
-                    Check for Nearby Healthcare
-                </button>
-                </div>
-                <form class="contact-form" onsubmit="submitContactForm(event)">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <input type="text" placeholder="Subject" required>
-                    <textarea placeholder="Message" rows="5" required></textarea>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeAuthModal()">&times;</span>
+    <!-- AUTH MODAL (Login / Sign Up) -->
+    <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeAuthModal()" aria-label="Close modal" type="button">&times;</button>
             <div class="auth-container">
-                <div class="auth-tabs">
-                    <button class="auth-tab-btn active" onclick="switchAuthTab(event, 'login')">Login</button>
-                    <button class="auth-tab-btn" onclick="switchAuthTab(event, 'signup')">Sign Up</button>
+                <h2 id="authModalTitle" class="sr-only">Account Authentication</h2>
+                <div class="auth-tabs" role="tablist">
+                    <button class="auth-tab-btn active" role="tab" aria-selected="true" onclick="switchAuthTab(event, 'login')" type="button">Login</button>
+                    <button class="auth-tab-btn" role="tab" aria-selected="false" onclick="switchAuthTab(event, 'signup')" type="button">Sign Up</button>
                 </div>
 
                 <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Password" required>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" name="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-cyan-gradient full-width ripple-btn">Login</button>
                 </form>
 
                 <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
-                    <input type="text" name="signupName" placeholder="Full Name" required>
-                    <input type="email" name="signupEmail" placeholder="Email" required>
-                    <input type="tel" name="signupPhone" placeholder="Phone Number" required>
-                    <input type="password" name="signupPassword" placeholder="Password" required>
-                    <input type="password" name="signupConfirmPassword" placeholder="Confirm Password" required>
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" name="signupName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" name="signupEmail" placeholder="name@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input type="tel" id="signup-phone" name="signupPhone" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="signupPassword" placeholder="Create Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" name="signupConfirmPassword" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-cyan-gradient full-width ripple-btn">Create Account</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div id="bookingModal" class="modal">
-        <div class="modal-content modal-large">
-            <span class="close" onclick="closeBookingModal()">&times;</span>
-            <h2>Book an Appointment</h2>
+    <!-- BOOKING MODAL -->
+    <div id="bookingModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
+        <div class="modal-content glass-card modal-large">
+            <button class="close-btn" onclick="closeBookingModal()" aria-label="Close booking modal" type="button">&times;</button>
+            <h2 id="bookingModalTitle">Book an Appointment</h2>
+            <div id="modalDoctorHeader"></div>
             <form class="booking-form" onsubmit="submitBooking(event)">
                 <div class="form-group">
-                    <label for="appointmentDate">Select Date:</label>
+                    <label for="appointmentDate">Select Consultation Date:</label>
                     <input type="date" id="appointmentDate" min="" required>
                 </div>
                 <div class="form-group">
-                    <label for="appointmentTime">Select Time:</label>
+                    <label for="appointmentTime">Select Time Slot:</label>
                     <select id="appointmentTime" required>
                         <option value="">Choose a time slot</option>
-                        <option value="09:00">09:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="14:00">2:00 PM</option>
-                        <option value="15:00">3:00 PM</option>
-                        <option value="16:00">4:00 PM</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="03:00 PM">03:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="symptoms">Reason for Visit:</label>
-                    <textarea id="symptoms" placeholder="Describe your symptoms or reason for visit" rows="4" required></textarea>
+                    <label for="symptoms">Reason for Visit & Symptoms:</label>
+                    <textarea id="symptoms" placeholder="Briefly describe your health concern or symptoms..." rows="4" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="patientPhone">Phone Number:</label>
+                    <label for="patientPhone">Contact Phone Number:</label>
                     <input type="tel" id="patientPhone" placeholder="Your phone number" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                <button type="submit" class="btn btn-cyan-gradient full-width ripple-btn">Confirm Booking</button>
             </form>
         </div>
     </div>
 
-    <footer class="footer">
+    <!-- REVIEW MODAL -->
+    <div id="reviewModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeReviewModal()" aria-label="Close review modal" type="button">&times;</button>
+            <h2 id="reviewModalTitle" style="margin-bottom: 1.2rem;">Leave a Patient Review</h2>
+            <form class="auth-form active" onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label for="reviewName">Your Name</label>
+                    <input type="text" id="reviewName" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="reviewRating">Rating (1 - 5 Stars)</label>
+                    <select id="reviewRating" required>
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5 Excellent)</option>
+                        <option value="4.5">⭐⭐⭐⭐.5 (4.5/5 Very Good)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5 Good)</option>
+                        <option value="3">⭐⭐⭐ (3/5 Average)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reviewComment">Your Feedback & Review</label>
+                    <textarea id="reviewComment" rows="4" placeholder="Share your experience with our specialist doctors..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-cyan-gradient full-width ripple-btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Back to Top" type="button">
+        ↑
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>About MediCare</h4>
-                <p>Your trusted healthcare platform providing quality medical services online.</p>
+                <a href="#home" class="logo footer-logo" onclick="navigateTo('home')">
+                    <span class="logo-icon">⚕️</span>
+                    <span class="logo-text">Medi<span class="logo-highlight">Care</span></span>
+                </a>
+                <p>Empowering individuals with modern, transparent, and accessible virtual healthcare solutions worldwide.</p>
             </div>
             <div class="footer-section">
-                <h4>Quick Links</h4>
+                <h4>Quick Navigation</h4>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#doctors">Doctors</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#home" onclick="navigateTo('home')">Home Overview</a></li>
+                    <li><a href="#doctors" onclick="navigateTo('doctors')">Find Doctors</a></li>
+                    <li><a href="#tools" onclick="navigateTo('tools')">Health Tools</a></li>
+                    <li><a href="#appointments" onclick="navigateTo('appointments')">My Appointments</a></li>
+                    <li><a href="#contact" onclick="navigateTo('contact')">Contact Support</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Follow Us</h4>
+                <h4>Connect With Us</h4>
                 <div class="social-links">
-                    <a href="#">Facebook</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">Instagram</a>
+                    <a href="#" aria-label="Facebook">Facebook</a>
+                    <a href="#" aria-label="Twitter">Twitter</a>
+                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                    <a href="#" aria-label="Instagram">Instagram</a>
                 </div>
             </div>
             <div class="footer-section">
-                <h4>Legal</h4>
+                <h4>Privacy & Legal</h4>
                 <ul>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Terms & Services</a></li>
+                    <li><a href="#">HIPAA Compliance</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 MediCare Healthcare Platform. All rights reserved. <br><center>-Raj Kankane And Team</center></p>
+            <p>&copy; 2026 MediCare Healthcare Platform. All rights reserved.</p>
+            <p class="credits">Designed & Developed by Raj Kankane And Team</p>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="script.js"></script>
 
- <script>
-  window.watsonAssistantChatOptions = {
-    integrationID: "0815ad8d-cd54-4d47-84fd-5747400aef2f", // The ID of this integration.
-    region: "us-east", // The region your integration is hosted in.
-    serviceInstanceID: "7e7a1e4a-2945-45db-81f3-4843f789943b", // The ID of your service instance.
-    onLoad: async (instance) => { await instance.render(); }
-  };
-  setTimeout(function(){
-    const t=document.createElement('script');
-    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
-    document.head.appendChild(t);
-  });
-</script>
-<script src="server.js"></script>
+    <!-- IBM Watson Assistant Script -->
+    <script>
+      window.watsonAssistantChatOptions = {
+        integrationID: "0815ad8d-cd54-4d47-84fd-5747400aef2f",
+        region: "us-east",
+        serviceInstanceID: "7e7a1e4a-2945-45db-81f3-4843f789943b",
+        showLauncher: true,
+        openChatByDefault: false,
+        styles: {
+          accentColor: "#0284c7",
+          primaryColor: "#06b6d4",
+          headerBackgroundColor: "#0f172a",
+          launcherBackgroundColor: "#0284c7",
+          fontFamily: "'Inter', sans-serif"
+        },
+        onLoad: async (instance) => {
+          await instance.render();
+        }
+      };
+      setTimeout(function(){
+        const t=document.createElement('script');
+        t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+        document.head.appendChild(t);
+      });
+    </script>
 </body>
 </html>

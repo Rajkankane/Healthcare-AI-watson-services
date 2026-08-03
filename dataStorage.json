@@ -1,0 +1,129 @@
+{
+  "doctors": [
+    {
+      "id": 1,
+      "name": "Dr. Sarah Johnson",
+      "specialty": "Cardiology",
+      "rating": 4.8,
+      "reviews": 245,
+      "location": "Downtown Medical Center",
+      "availability": "Mon-Fri 9AM-5PM",
+      "fee": "$100",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/Psychiatrist.jpg?raw=true"
+    },
+    {
+      "id": 2,
+      "name": "Dr. Michael Chen",
+      "specialty": "Dermatology",
+      "rating": 4.9,
+      "reviews": 312,
+      "location": "Skin Care Clinic",
+      "availability": "Mon-Sat 10AM-6PM",
+      "fee": "$80",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/dermatology.jpg?raw=true"
+    },
+    {
+      "id": 3,
+      "name": "Dr. Emily Rodriguez",
+      "specialty": "Pediatrics",
+      "rating": 4.7,
+      "reviews": 189,
+      "location": "Children's Hospital",
+      "availability": "Tue-Thu 8AM-4PM",
+      "fee": "$90",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/pediatrics.jpg?raw=true"
+    },
+    {
+      "id": 4,
+      "name": "Dr. James Wilson",
+      "specialty": "Orthopedics",
+      "rating": 4.6,
+      "reviews": 278,
+      "location": "Sports Medicine Center",
+      "availability": "Mon-Fri 9AM-5PM",
+      "fee": "$120",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/orthopedics.jpg?raw=true"
+    },
+    {
+      "id": 5,
+      "name": "Dr. Lisa Anderson",
+      "specialty": "Neurology",
+      "rating": 4.9,
+      "reviews": 156,
+      "location": "Neurological Institute",
+      "availability": "Wed-Fri 1PM-7PM",
+      "fee": "$110",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/neurology%20(2).jpg?raw=true"
+    },
+    {
+      "id": 6,
+      "name": "Dr. Robert Martinez",
+      "specialty": "General Medicine",
+      "rating": 4.5,
+      "reviews": 423,
+      "location": "Primary Care Clinic",
+      "availability": "Mon-Sun 9AM-9PM",
+      "fee": "$70",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/general-medicine.jpg?raw=true"
+    },
+    {
+      "id": 7,
+      "name": "Dr. Aliza Sen ",
+      "specialty": "Psychiatrist",
+      "rating": 4.5,
+      "reviews": 923,
+      "location": "Happy Care Clinic",
+      "availability": "Mon-Sun 9AM-9PM",
+      "fee": "$70",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/cardiology.jpg?raw=true"
+    },
+    {
+      "id": 8,
+      "name": "Dr. Jhon Calvin ",
+      "specialty": "Cardiology",
+      "rating": 4.8,
+      "reviews": 245,
+      "location": "MK Hospital Civil Line Ahmedabad",
+      "availability": "Mon-Fri 9AM-5PM",
+      "fee": "$80",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/neurology.jpg?raw=true"
+    },
+    {
+      "id": 9,
+      "name": "Dr. Aliza Jain",
+      "specialty": "Neurology",
+      "rating": 4.9,
+      "reviews": 156,
+      "location": "Neurological Institute at Sola Civil Ahmedabad ",
+      "availability": "Wed-Fri 1PM-7PM",
+      "fee": "$110",
+      "image": "https://github.com/Rajkankane/Healthcare-AI-watson-services/blob/main/images/orthopedics%20(2).jpg?raw=true"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "555-0101",
+      "joinDate": "2025-01-15",
+      "password": "password123"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "555-0102",
+      "joinDate": "2025-01-20",
+      "password": "password123"
+    }
+  ],
+  "appointments": [],
+  "feedback": [
+    { "id": 1, "patient": "John Doe", "rating": 5, "comment": "Excellent service and quick consultation setup!" },
+    { "id": 2, "patient": "Jane Smith", "rating": 5, "comment": "The symptom checker accurately directed me to Dr. Chen. Highly recommend!" }
+  ],
+  "contactMessages": [],
+  "triageLogs": [],
+  "bmiLogs": []
+}

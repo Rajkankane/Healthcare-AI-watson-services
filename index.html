@@ -543,6 +543,7 @@
                 </div>
 
                 <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                    <div id="loginAlert" class="auth-alert hidden" role="alert"></div>
                     <div class="form-group">
                         <label for="login-email">Email Address</label>
                         <input type="email" id="login-email" name="email" placeholder="name@example.com" required>
@@ -555,6 +556,7 @@
                 </form>
 
                 <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
+                    <div id="signupAlert" class="auth-alert hidden" role="alert"></div>
                     <div class="form-group">
                         <label for="signup-name">Full Name</label>
                         <input type="text" id="signup-name" name="signupName" placeholder="John Doe" required>
@@ -628,12 +630,23 @@
                     <input type="text" id="reviewName" placeholder="e.g. John Doe" required>
                 </div>
                 <div class="form-group">
+                    <label for="reviewDoctorSelect">Select Specialist (Optional)</label>
+                    <select id="reviewDoctorSelect">
+                        <option value="">General Platform & Care Review</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="reviewRating">Rating (1 - 5 Stars)</label>
                     <select id="reviewRating" required>
-                        <option value="5">⭐⭐⭐⭐⭐ (5/5 Excellent)</option>
-                        <option value="4.5">⭐⭐⭐⭐.5 (4.5/5 Very Good)</option>
-                        <option value="4">⭐⭐⭐⭐ (4/5 Good)</option>
-                        <option value="3">⭐⭐⭐ (3/5 Average)</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5/5 - Excellent)</option>
+                        <option value="4.5">⭐⭐⭐⭐.5 (4.5/5 - Very Good)</option>
+                        <option value="4">⭐⭐⭐⭐ (4/5 - Good)</option>
+                        <option value="3.5">⭐⭐⭐.5 (3.5/5 - Above Average)</option>
+                        <option value="3">⭐⭐⭐ (3/5 - Average)</option>
+                        <option value="2.5">⭐⭐.5 (2.5/5 - Fair)</option>
+                        <option value="2">⭐⭐ (2/5 - Below Average)</option>
+                        <option value="1">⭐ (1/5 - Poor)</option>
                     </select>
                 </div>
                 <div class="form-group">

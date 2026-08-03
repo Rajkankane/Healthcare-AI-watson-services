@@ -1,8 +1,4 @@
-/* ==========================================================================
-   MEDICARE APP CORE LOGIC & INTERACTIVE FEATURES (script.js)
-   ========================================================================== */
 
-// --- Application State ---
 const appState = {
   doctors: [
     {

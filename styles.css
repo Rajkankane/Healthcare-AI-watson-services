@@ -1,7 +1,3 @@
-/* ==========================================================================
-   MEDICARE MODERN DESIGN SYSTEM & STYLES (styles.css)
-   ========================================================================== */
-
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +5,6 @@
 }
 
 :root {
-  /* Color Palette - Light Mode */
   --primary-color: #0284c7;
   --primary-hover: #0369a1;
   --secondary-color: #0d9488;
@@ -48,7 +43,6 @@
 }
 
 body.dark-mode {
-  /* Color Palette - Dark Mode */
   --primary-color: #38bdf8;
   --primary-hover: #0284c7;
   --secondary-color: #2dd4bf;
@@ -102,7 +96,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-color);
 }
 
-/* Glassmorphism Card Utility */
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(16px);
@@ -118,7 +111,6 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-lg);
 }
 
-/* Ambient Glow Background */
 .ambient-glow-container {
   position: fixed;
   top: 0;
@@ -197,7 +189,6 @@ h1, h2, h3, h4, h5, h6 {
   color: #0284c7;
 }
 
-/* Scroll Progress Bar */
 .scroll-progress-bar {
   position: fixed;
   top: 0;
@@ -209,7 +200,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: width 0.1s linear;
 }
 
-/* Toast Container */
 .toast-container {
   position: fixed;
   top: 20px;
@@ -226,7 +216,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.3s ease;
 }
 
-/* Header Navbar */
 .navbar {
   position: sticky;
   top: 0;
@@ -313,7 +302,6 @@ h1, h2, h3, h4, h5, h6 {
   gap: 12px;
 }
 
-/* User Profile Badge */
 .user-profile-badge {
   display: flex;
   align-items: center;
@@ -369,7 +357,6 @@ h1, h2, h3, h4, h5, h6 {
   border-color: var(--primary-color);
 }
 
-/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -414,7 +401,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-/* Ripple Button Effect */
 .ripple-btn {
   position: relative;
   overflow: hidden;
@@ -436,7 +422,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Mobile Hamburger Toggle */
 .mobile-menu-toggle {
   display: none;
   background: none;
@@ -455,7 +440,6 @@ h1, h2, h3, h4, h5, h6 {
   transition: var(--transition-fast);
 }
 
-/* Page Layout */
 .page {
   display: none;
   padding: 2.5rem 1.5rem;
@@ -474,7 +458,6 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hero Section */
 .hero-section {
   padding: 3rem 2.5rem;
   display: grid;
@@ -603,8 +586,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.85rem;
   color: var(--text-muted);
 }
-
-/* Section Header */
 .section-header {
   margin-bottom: 2.5rem;
 }
@@ -627,7 +608,6 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
 }
 
-/* Services Grid */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -687,7 +667,6 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-color);
 }
 
-/* Stats Section */
 .stats-section {
   padding: 2.5rem;
   display: grid;
@@ -720,7 +699,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.95rem;
 }
 
-/* Testimonials Section */
 .testimonials-section {
   margin-bottom: 3.5rem;
 }
@@ -838,7 +816,6 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-full);
 }
 
-/* Doctors Section */
 .doctors-header {
   padding: 2rem;
   margin-bottom: 2rem;
@@ -973,7 +950,23 @@ h1, h2, h3, h4, h5, h6 {
   gap: 4px;
 }
 
-/* Health Tools Section */
+.doctor-card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.testimonial-doctor-tag {
+  display: inline-block;
+  background: var(--surface-hover);
+  color: var(--primary-color);
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  margin-bottom: 0.8rem;
+}
+
 .page-title-box {
   padding: 2.2rem;
   margin-bottom: 2.5rem;
@@ -1094,7 +1087,6 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
 
-/* Results Boxes */
 .triage-result-box,
 .bmi-result-box {
   margin-top: 1.8rem;
@@ -1217,7 +1209,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.5;
 }
 
-/* Appointments & Empty State */
 .appointments-container {
   margin-top: 1rem;
 }
@@ -1238,7 +1229,6 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
 }
 
-/* Admin Dashboard */
 .admin-container {
   padding: 2.2rem;
 }
@@ -1327,8 +1317,6 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--border-color);
   font-size: 0.9rem;
 }
-
-/* Contact & FAQ */
 .contact-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1522,7 +1510,65 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
-/* Back to Top Floating Button */
+.demo-login-box {
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px dashed var(--primary-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.demo-login-text {
+  font-size: 0.85rem;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demo-login-text code {
+  background: var(--surface-hover);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--primary-color);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.82rem;
+}
+
+.auth-alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.4;
+}
+
+.auth-alert.danger {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+.auth-alert.warning {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.auth-alert.success {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+}
+
 .back-to-top {
   position: fixed;
   bottom: 25px;
@@ -1555,7 +1601,6 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--accent-color);
 }
 
-/* Footer */
 .footer {
   background: var(--surface-color);
   border-top: 1px solid var(--border-color);
@@ -1619,7 +1664,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
-/* Responsive Media Queries */
 @media (max-width: 900px) {
   .hero-section {
     grid-template-columns: 1fr;
@@ -1666,7 +1710,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* IBM Watson Assistant Custom Styling & Glow */
 #WACWidget .WACLauncher__Button,
 .WACLauncher__Button,
 button[class*="WACLauncher"] {
